@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minLength: 8,
+        minLength: [8, 'Password must includes 8 characters minimum'],
     },
     firstName: {
         type: String,
@@ -38,7 +38,8 @@ const userSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true,
-        enum: ['client', 'admin']
+        enum: ['client', 'admin'],
+        default : 'client',
     },
     address: {
         city: {
@@ -61,8 +62,13 @@ const userSchema = new mongoose.Schema({
             type: Number,
             required: true,
         }
-    }
-
+    },
+    tokens: [{
+        token: {
+            type: String,
+            // required: true
+        }
+    }]
 });
 
 const User = mongoose.model('User', userSchema);
