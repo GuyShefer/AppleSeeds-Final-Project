@@ -1,11 +1,22 @@
 const express = require('express');
 const userRouter = express.Router();
 const userController = require('../controllers/users.controller');
-/// have to add authenticate middleware
+const auth = require('../middleware/auth');
 
 userRouter.post('/', (req, res) => {
     userController.addUser(req, res);
-})
+});
 
+userRouter.post('/login', (req, res) => {
+    userController.login(req, res);
+});
+
+userRouter.post('/logout', auth, (req, res) => {
+    userController.logout(req, res);
+});
+
+userRouter.post('/logout/all', auth, (req, res) => {
+    userController.logoutAll(req, res);
+})
 
 module.exports = userRouter;
