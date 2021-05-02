@@ -19,4 +19,8 @@ userRouter.post('/logout/all', auth, (req, res) => {
     userController.logoutAll(req, res);
 })
 
+userRouter.get('/', auth, (req, res) => {
+    userController.getAllUsers(req, res);
+})
+
 module.exports = userRouter;

@@ -48,10 +48,26 @@ const logoutAll = async (req, res) => {
     }
 }
 
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        if (!users) {
+            return res.status(206).send('No users.');
+        }
+        else if (users.length === 0) {
+            return res.status(200).send('No users')
+        }
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).send();
+    }
+}
+
 
 module.exports = {
     addUser,
     login,
     logout,
     logoutAll,
+    getAllUsers,
 }
