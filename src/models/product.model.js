@@ -27,15 +27,9 @@ const productSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
-        lowercase: true,
         required: true,
     },
-    description: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        required: true,
-    },
+
     image: {
         type: String,
         required: true,

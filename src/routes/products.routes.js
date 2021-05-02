@@ -6,3 +6,5 @@ const productController = require('../controllers/products.controller');
 productRouter.post('/', auth, (req, res) => {
     productController.createProduct(req, res);
 })
+
+module.exports = productRouter;
