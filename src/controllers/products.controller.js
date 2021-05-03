@@ -1,10 +1,16 @@
 const Product = require('../models/product.model');
 
 const createProduct = async (req, res) => {
-    const extractProduct = { type, material, price, quantity, name, description, image, bestSeller } = req.body;
+
+    const extractProduct = { productType, material, price, quantity, name, description, bestSeller } = req.body;
+    extractProduct.image = req.file.buffer;
     try {
         const product = new Product(extractProduct);
+        // await product.save();
+
+        product.image = req.file.buffer;
         await product.save();
+
         res.status(201).send({ messege: 'Product has been created.' });
     } catch (err) {
         res.status(400).send(err.message);
@@ -82,15 +88,15 @@ const getProductById = async (req, res) => {
 }
 
 const getAllProductsByType = async (req, res) => {
-    const type = req.params.type;
+    const productType = req.params.productType;
     const allowTypes = ['earrings', 'ring', 'necklace', 'bracelet', 'piercings', 'macrame'];
-    const isValidOperation = allowTypes.includes(type);
+    const isValidOperation = allowTypes.includes(productType);
 
     if (!isValidOperation) {
         return res.status(400).send({ error: "Invalid type" });
     }
     try {
-        const products = await Product.find({ type: type }, { image: 1, price: 1, name: 1 });
+        const products = await Product.find({ productType }, { image: 1, price: 1, name: 1 });
         res.status(200).json(products);
     } catch (err) {
         res.status(500).send(err);

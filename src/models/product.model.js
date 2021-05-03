@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    type: {
+    productType: {
         type: String,
         trim: true,
         lowercase: true,
@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
         unique: true,
     },
     image: {
-        type: String,
+        type: Buffer,
         required: true,
     },
     bestSeller : {

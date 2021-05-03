@@ -39,8 +39,9 @@ const logout = async (req, res) => {
 }
 
 const logoutAll = async (req, res) => {
+    const user = req.user
     try {
-        req.user.tokens = [];
+        user.tokens = [];
         await req.user.save();
         res.send();
     } catch (err) {
@@ -62,7 +63,6 @@ const getAllUsers = async (req, res) => {
         res.status(500).send();
     }
 }
-
 
 module.exports = {
     addUser,

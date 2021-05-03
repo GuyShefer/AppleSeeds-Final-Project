@@ -3,8 +3,22 @@ const productRouter = express.Router();
 const auth = require('../middleware/auth');
 const productController = require('../controllers/products.controller');
 const adminAuth = require('../middleware/adminAuth');
+const multer = require('multer');
 
-productRouter.post('/', auth, adminAuth, (req, res) => {
+const upload = multer({
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter(req, file, cb) {
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return cb(new Error('Please upload an image'))
+        }
+
+        cb(undefined, true)
+    }
+})
+
+productRouter.post('/', auth, adminAuth, upload.single('image'), (req, res) => {
     productController.createProduct(req, res);
 });
 
@@ -16,7 +30,7 @@ productRouter.get('/:id', (req, res) => {
     productController.getProductById(req, res);
 });
 
-productRouter.get('/byType/:type', (req, res) => {
+productRouter.get('/byType/:productType', (req, res) => {
     productController.getAllProductsByType(req, res);
 });
 
