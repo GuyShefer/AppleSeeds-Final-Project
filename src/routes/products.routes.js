@@ -11,7 +11,15 @@ productRouter.get('/', (req, res) => {
     productController.getAllProducts(req, res);
 });
 
-productRouter.get('/bestSeller', (req, res) => {
+productRouter.get('/:id', (req, res) => {
+    productController.getProductById(req, res);
+});
+
+productRouter.get('/byType/:type', (req, res) => {
+    productController.getAllProductsByType(req, res);
+});
+
+productRouter.get('/bestSeller/all', (req, res) => {
     productController.getAllBestSellerProducts(req, res);
 });
 
