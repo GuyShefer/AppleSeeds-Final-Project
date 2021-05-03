@@ -24,7 +24,7 @@ const productSchema = new mongoose.Schema({
         required: true,
         min: 0,
     },
-    name: {
+    productName: {
         type: String,
         trim: true,
         required: true,

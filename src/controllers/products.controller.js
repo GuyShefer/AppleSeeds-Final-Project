@@ -2,7 +2,7 @@ const Product = require('../models/product.model');
 
 const createProduct = async (req, res) => {
 
-    const extractProduct = { productType, material, price, quantity, name, description, bestSeller } = req.body;
+    const extractProduct = { productType, material, price, quantity, productName, description, bestSeller } = req.body;
     extractProduct.image = req.file.buffer;
     try {
         const product = new Product(extractProduct);
@@ -13,13 +13,14 @@ const createProduct = async (req, res) => {
 
         res.status(201).send({ messege: 'Product has been created.' });
     } catch (err) {
+        console.log(err.message);
         res.status(400).send(err.message);
     }
 }
 
 const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find({}, { image: 1, price: 1, name: 1 });
+        const products = await Product.find({}, { image: 1, price: 1, productName: 1 });
         if (!products) {
             return res.status(404).send();
         }
@@ -43,7 +44,7 @@ const getAllBestSellerProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowUpdates = ['material', 'price', 'quantity', 'name', 'bestSeller'];
+    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
 
     if (!isValidOperation) {
@@ -96,7 +97,7 @@ const getAllProductsByType = async (req, res) => {
         return res.status(400).send({ error: "Invalid type" });
     }
     try {
-        const products = await Product.find({ productType }, { image: 1, price: 1, name: 1 });
+        const products = await Product.find({ productType }, { image: 1, price: 1, productName: 1 });
         res.status(200).json(products);
     } catch (err) {
         res.status(500).send(err);
