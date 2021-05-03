@@ -18,9 +18,10 @@ const upload = multer({
     }
 })
 
-productRouter.post('/', auth, adminAuth, upload.single('image'), (req, res) => {
+productRouter.post('/',  upload.single('image'), (req, res) => {
     productController.createProduct(req, res);
 });
+// /api/users
 
 productRouter.get('/', (req, res) => {
     productController.getAllProducts(req, res);
