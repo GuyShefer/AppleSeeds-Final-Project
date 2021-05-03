@@ -2,8 +2,9 @@ const express = require('express');
 const productRouter = express.Router();
 const auth = require('../middleware/auth');
 const productController = require('../controllers/products.controller');
+const adminAuth = require('../middleware/adminAuth');
 
-productRouter.post('/', auth, (req, res) => {
+productRouter.post('/', auth, adminAuth, (req, res) => {
     productController.createProduct(req, res);
 });
 
@@ -23,11 +24,11 @@ productRouter.get('/bestSeller/all', (req, res) => {
     productController.getAllBestSellerProducts(req, res);
 });
 
-productRouter.patch('/:id', auth, (req, res) => {
+productRouter.patch('/:id', auth, adminAuth, (req, res) => {
     productController.updateProduct(req, res);
 });
 
-productRouter.delete('/:id', auth, (req, res) => {
+productRouter.delete('/:id', auth, adminAuth, (req, res) => {
     productController.deleteProduct(req, res);
 });
 
