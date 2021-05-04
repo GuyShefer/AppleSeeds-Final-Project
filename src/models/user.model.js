@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require("validator");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -70,7 +71,6 @@ const userSchema = new mongoose.Schema({
     tokens: [{
         token: {
             type: String,
-            // required: true
         }
     }]
 });
@@ -78,7 +78,7 @@ const userSchema = new mongoose.Schema({
 // create user token
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
-    const token = jwt.sign({ _id: user.id.toString() }, 'appleseedsAcademyBootcamp'); // have to disappear ***(env)
+    const token = jwt.sign({ _id: user.id.toString() }, process.env.TOKEN_SECURITY);
     user.tokens = user.tokens.concat({ token });
     await user.save();
     return token;

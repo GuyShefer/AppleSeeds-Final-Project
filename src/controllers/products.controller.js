@@ -1,19 +1,20 @@
 const Product = require('../models/product.model');
+const sharp = require('sharp');
+
 
 const createProduct = async (req, res) => {
-
     const extractProduct = { productType, material, price, quantity, productName, description, bestSeller } = req.body;
-    extractProduct.image = req.file.buffer;
+
     try {
         const product = new Product(extractProduct);
-        // await product.save();
-
-        product.image = req.file.buffer;
+        const buffer = await sharp(req.file.buffer).resize({width: 600, height : 600}).png().toBuffer();
+        product.image = buffer;
         await product.save();
 
         res.status(201).send({ messege: 'Product has been created.' });
     } catch (err) {
         console.log(err.message);
+        console.log('===');
         res.status(400).send(err.message);
     }
 }
@@ -77,12 +78,14 @@ const deleteProduct = async (req, res) => {
 
 const getProductById = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const id = req.params.id
+        // validation for the id ***
+        const product = await Product.findByIdAndUpdate(id, {$inc : {impressions : 1}});
         if (!product) {
             return res.status(404).send();
         }
-
-        res.send(product)
+        res.set('Content-Type', 'image/png');
+        res.send(product.image); /// <><><><><><><><><><><> have to return all obj
     } catch (err) {
         res.status(500).send(err);
     }

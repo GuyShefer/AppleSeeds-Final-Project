@@ -38,6 +38,11 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         required : true,
     },
+    impressions : {
+        type: Number,
+        default: 0,
+        min: 0,
+    },
 });
 
 const Product = mongoose.model('Product', productSchema);

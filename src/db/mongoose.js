@@ -1,20 +1,16 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.connect('mongodb://127.0.0.1:27017/finalProjectAPI', {
+const url = process.env.DB_URL;
+const localUrl = 'mongodb://127.0.0.1:27017/finalProjectAPI';
+
+mongoose.connect(url, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
     useFindAndModify: false
-}).then(() => {
-    console.log('connected succsessful');
+}).then (() => {
+    console.log('connected succsessful.');
+}).catch((err) => {
+    console.log('db connection failed.');
 });
-
-
-// mongoose.connect('mongodb+srv://admin:Aa123456@appleseads-app.p0wze.mongodb.net/bankAPI?retryWrites=true&w=majority', {
-//     useNewUrlParser: true,
-//     useCreateIndex: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false
-// }).then (() => {
-//     console.log('connected succsessful');
-// })

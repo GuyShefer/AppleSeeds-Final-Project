@@ -7,13 +7,15 @@ const upload = require('../middleware/uploadFile');
 
 productRouter.post('/', auth, adminAuth, upload.single('image'), (req, res) => {
     productController.createProduct(req, res);
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
 });
 
 productRouter.get('/', (req, res) => {
     productController.getAllProducts(req, res);
 });
 
-productRouter.get('/:id', (req, res) => {
+productRouter.patch('/:id', (req, res) => {
     productController.getProductById(req, res);
 });
 
@@ -25,7 +27,7 @@ productRouter.get('/bestSeller/all', (req, res) => {
     productController.getAllBestSellerProducts(req, res);
 });
 
-productRouter.patch('/:id', auth, adminAuth, (req, res) => {
+productRouter.patch('/:id', auth, adminAuth, upload.single('image'), (req, res) => {
     productController.updateProduct(req, res);
 });
 

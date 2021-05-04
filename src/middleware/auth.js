@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
+require('dotenv').config();
 
 const auth = async (req, res, next) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
-        const userDecoded = jwt.verify(token, 'appleseedsAcademyBootcamp'); /// *****
+        const userDecoded = jwt.verify(token, process.env.TOKEN_SECURITY);
         const user = await User.findOne({ _id: userDecoded._id, 'tokens.token': token });
 
         if (!user) {
