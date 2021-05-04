@@ -4,14 +4,15 @@ const cors = require('cors');
 const port = process.env.PORT || 8000;
 const app = express();
 const usersRoute = require('./src/routes/users.routes');
-const productRoute = require('./src/routes/products.routes');
+const productsRoute = require('./src/routes/products.routes');
 require('./src/db/mongoose');
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
 app.use('/api/users', usersRoute);
-app.use('/api/products', productRoute);
+app.use('/api/products', productsRoute);
 
 if (process.env.NODE_ENV === 'production') {
     // Exprees will serve up production assets
