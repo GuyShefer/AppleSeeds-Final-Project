@@ -13,11 +13,6 @@ app.use(bodyParser.json())
 app.use('/api/users', usersRoute);
 app.use('/api/products', productRoute);
 
-
-app.listen(port, () => {
-    console.log(`application start at ${port}`);
-})
-
 if (process.env.NODE_ENV === 'production') {
     // Exprees will serve up production assets
     app.use(express.static('client/build'));
@@ -28,3 +23,7 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
+
+app.listen(port, () => {
+    console.log(`application start at ${port}`);
+})
