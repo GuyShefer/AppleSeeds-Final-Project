@@ -78,7 +78,7 @@ const deleteProduct = async (req, res) => {
 
 const getProductById = async (req, res) => {
     try {
-        const id = req.params.id
+        const id = req.params.id;
         // validation for the id ***
         const product = await Product.findByIdAndUpdate(id, {$inc : {impressions : 1}});
         if (!product) {
