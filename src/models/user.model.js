@@ -75,6 +75,13 @@ const userSchema = new mongoose.Schema({
     }]
 });
 
+// make a relationship between User and Purchase
+userSchema.virtual('purchases', {
+    ref: 'Purchase',
+    localField: '_id',
+    foreignField: 'owner',
+})
+
 // create user token
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
