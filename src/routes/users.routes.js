@@ -24,4 +24,8 @@ userRouter.get('/', auth, adminAuth, (req, res) => {
     userController.getAllUsers(req, res);
 });
 
+userRouter.put('/', auth, (req, res) => {
+    userController.updateUser(req, res);
+});
+
 module.exports = userRouter;

@@ -64,10 +64,28 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const updateUser = async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowUpdates = ['email', 'password', 'firstName', 'lastName', 'address', 'phone'];
+    const isValidOperation = updates.every(update => allowUpdates.includes(update));
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates.' })
+    }
+    try {
+        const user = req.user;
+        updates.forEach(update => user[update] = req.body[update]);
+        await user.save();
+        res.status(200).json(user);
+    } catch (err) {
+        res.status(500).send();
+    }
+}
+
 module.exports = {
     addUser,
     login,
     logout,
     logoutAll,
     getAllUsers,
+    updateUser,
 }
