@@ -3,20 +3,23 @@ const Purchase = require('../models/purchase.model');
 
 
 const purchaseProducts = async (req, res) => {
-    const extractPurchase = { products, totalPrice } = req.body;
-    if(!await isValiadTotalPrice(extractPurchase)) {
-        console.log('throw new err');
+    try {
+        const extractPurchase = { products, totalPrice } = req.body;
+        if (!await isValiadTotalPrice(extractPurchase)) {
+            throw new Error('invalid total price.');
+        }
+        extractPurchase.owner = req.user.id;
+        const purchase = new Purchase(extractPurchase);
+        console.log(purchase);
+        purchase.save();
+
+
+        res.status(200).send();
+        // have to purchase all the products + 
+        // have to update product quantity
+    } catch (err) {
+        res.status(500).send(err);
     }
-    extractPurchase.owner = req.user.id;
-    const purchase = new Purchase(extractPurchase);
-    console.log(purchase);
-    purchase.save();
-
-
-
-    res.status(200).send();
-    // have to purchase all the products + 
-    // have to update product quantity
 }
 
 const isValiadTotalPrice = async (purchase) => { // and update product amount
