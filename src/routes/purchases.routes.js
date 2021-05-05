@@ -4,20 +4,21 @@ const auth = require('../middleware/auth');
 const adminAuth = require('../middleware/adminAuth');
 const purchaseController = require('../controllers/purchases.controller');
 
-// purchase products
+
 purchaseRouter.put('/', auth, (req, res) => {
     purchaseController.purchaseProducts(req, res);
 });
 
-// get all purchases
+purchaseRouter.get('/', auth, adminAuth, (req, res) => {
+    purchaseController.getAllPurchases(req, res);
+});
 
-// get purchases from specific user (history)
+purchaseRouter.get('/byUser', auth, (req, res) => {
+    purchaseController.getAllUserPurchases(req, res);
+});
 
-// delete purchase
-
-
-
-
-
+purchaseRouter.delete('/:id', auth, adminAuth, (req, res) => {
+    purchaseController.deletePurchaseById(req, res);
+});
 
 module.exports = purchaseRouter;

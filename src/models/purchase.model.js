@@ -26,12 +26,18 @@ const purchaseSchema = new mongoose.Schema({
         required: true,
         min: 0,
     },
-    data: {
+    date: {
         type: Date,
-        default: Date.now,
+        default: () => new Date().addHours(3)
     }
+
 });
 
 const Purchase = mongoose.model('Purchase', purchaseSchema);
 
 module.exports = Purchase;
+
+Date.prototype.addHours = function (h) {
+    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+    return this;
+}
