@@ -5,11 +5,13 @@ const Purchase = require('../models/purchase.model');
 const purchaseProducts = async (req, res) => {
     try {
         const extractPurchase = { products, totalPrice } = req.body;
-        // more validations
-
-        if (!await isValiadTotalPriceAndQuantity(extractPurchase)) {
-            throw new Error('invalid total price.');
+        if (products.length < 1) {
+            return res.status(404).send('There are no items in the cart');
         }
+        else if (!await isValiadTotalPriceAndQuantity(extractPurchase) || totalPrice < 0) {
+            return res.status(404).send('Total price is not valid');
+        }
+        
         extractPurchase.owner = req.user.id;
         const purchase = new Purchase(extractPurchase);
         if (!purchase) {

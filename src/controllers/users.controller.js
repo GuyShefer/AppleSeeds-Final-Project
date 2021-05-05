@@ -1,10 +1,20 @@
 const User = require('../models/user.model');
-
+const validator = require("validator");
 
 const addUser = async (req, res) => {
     const extractUser = { email, password, firstName, lastName, address } = req.body;
-
-    // controller validation
+    if (email == null || password == null || firstName == null || lastName == null || address == null) {
+        return res.status(404).send('Invalid user details');
+    }
+    else if (!validator.isEmail(email)) {
+        return res.status(404).send('Invalid Email');
+    }
+    else if (!(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(password)) {
+        return res.status(404).send('password must contain at least 8 characters, and iclude one uppercase and one lowercase letter and one number.  ')
+    }
+    else if (await isEmailExist(email)) {
+        return res.status(404).send('Email is already exists');
+    }
     try {
         const user = new User(extractUser);
         await user.save();
@@ -17,7 +27,9 @@ const addUser = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-    // controller validation
+    if (email == null || password == null) {
+        return res.status(404).send('Invalid login details');
+    }
 
     try {
         const user = await User.findByCredentials(email, password);
@@ -68,8 +80,22 @@ const updateUser = async (req, res) => {
     const updates = Object.keys(req.body);
     const allowUpdates = ['email', 'password', 'firstName', 'lastName', 'address', 'phone'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
+
     if (!isValidOperation) {
         return res.status(400).send({ error: 'Invalid updates.' })
+    }
+    else if (req.body.password != null) {
+        if (!(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(req.body.password)) {
+            return res.status(404).send('password must contain at least 8 characters, and iclude one uppercase and one lowercase letter and one number.  ')
+        }
+    }
+    else if (req.body.email != null) {
+        if (!validator.isEmail(req.body.email)) {
+            return res.status(404).send('Invalid Email');
+        }
+        else if (await isEmailExist(req.body.email)) {
+            return res.status(404).send('Email is already exists');
+        }
     }
     try {
         const user = req.user;
@@ -77,9 +103,14 @@ const updateUser = async (req, res) => {
         await user.save();
         res.status(200).json(user);
     } catch (err) {
-        res.status(500).send();
+        res.status(500).send(err.message);
     }
 }
+
+const isEmailExist = (async (email) => {
+    const user = await User.find({ email });
+    return user[0] ? true : false;
+});
 
 module.exports = {
     addUser,
