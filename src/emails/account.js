@@ -11,7 +11,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 //     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 // })
 
-const setWelcomeEmail = (email, name) => {
+const sendWelcomeEmail = (email, name) => {
     sgMail.send({
         to: email,
         from: 'havaya.jewelry1@gmail.com',
@@ -21,5 +21,5 @@ const setWelcomeEmail = (email, name) => {
 }
 
 module.exports = { 
-    setWelcomeEmail
+    sendWelcomeEmail
 }
