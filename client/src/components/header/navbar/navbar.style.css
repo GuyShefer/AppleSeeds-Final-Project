@@ -4,10 +4,112 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Oswald';
+    letter-spacing: 1.6px;
 }
 
 .logo {
     width: 170px;
     height: 170px;
     background: url('../../../images/logo-img.jpg') no-repeat center center/cover;
+}
+
+.nav-list-menu {
+    width: 400px;
+}
+
+.nav-list-menu .nav-list {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    align-items: center;
+    margin: 0;
+    padding: 0
+}
+
+[type=button]:not(:disabled) , .btn-primary:active:focus, .nav-list-item{
+    font-size: 22px;
+    border: none;
+}
+
+[type=button]:not(:disabled):hover,
+[type=button]:not(:disabled):active,
+[type=button]:not(:disabled):focus,
+.dropdown .btn-primary ,
+.nav-list-item {
+    background: #fff;
+    color: #333;
+    font-weight: 600;
+    box-shadow: none;
+    cursor: pointer;
+    letter-spacing: 1.6px;
+}
+
+[type=button]:not(:disabled):hover ,
+.nav-list-item:hover span {
+    color: rgb(170, 143, 20);
+    /* border-bottom: 1px solid #333; */
+}
+
+.nav-list-item span {
+    padding: 16px 0;
+}
+
+.nav-list-item span:hover {
+    color: rgb(170, 143, 20);
+    border-bottom: 1px solid #333;
+}
+
+.primary:active:focus {
+    box-shadow: none;
+}
+
+.show>.btn-primary.dropdown-toggle {
+    background: #fff;
+    font-size: 22px;
+    border: none;
+    box-shadow: none;
+}
+
+ .nav-list .show>.btn-primary.dropdown-toggle {
+    color: rgb(170, 143, 20);
+    background: #fff;
+    border: none;
+}
+
+
+ .dropdown .btn-primary:active:focus, 
+ .dropdown .show>.btn-primary.dropdown-toggle:focus,
+ .nav-list .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.nav-list .dropdown-item {
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0.65rem 1rem;
+}
+
+.nav-list .dropdown-item:hover {
+    color: rgb(170, 143, 20);
+    background-color: #fff;
+}
+
+.dropdown:hover .dropdown-menu, .dropdown .dropdown-menu{
+    border: none;
+    opacity: 0.9;
+}
+
+/*  */
+
+.user-details {
+    width: 200px;
+    border: 1px solid;
+    text-align: center;
 }
