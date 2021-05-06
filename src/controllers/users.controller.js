@@ -1,5 +1,7 @@
 const User = require('../models/user.model');
 const validator = require("validator");
+const { sendWelcomeEmail } = require('../emails/account');
+const validPassowrd = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
 
 const addUser = async (req, res) => {
     const extractUser = { email, password, firstName, lastName, address } = req.body;
@@ -9,15 +11,16 @@ const addUser = async (req, res) => {
     else if (!validator.isEmail(email)) {
         return res.status(404).send('Invalid Email');
     }
-    else if (!(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(password)) {
-        return res.status(404).send('password must contain at least 8 characters, and iclude one uppercase and one lowercase letter and one number.  ')
-    }
     else if (await isEmailExist(email)) {
         return res.status(404).send('Email is already exists');
+    }
+    else if (!validPassowrd.test(password)) {
+        return res.status(404).send('password must contain at least 8 characters, and iclude one uppercase and one lowercase letter and one number.');
     }
     try {
         const user = new User(extractUser);
         await user.save();
+        sendWelcomeEmail(email, firstName); /////////
         const token = await user.generateAuthToken();
         res.status(201).send({ messege: 'User has been created.', token });
     } catch (err) {

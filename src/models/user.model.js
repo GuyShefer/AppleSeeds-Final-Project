@@ -28,6 +28,11 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         required: true,
         minLength: 2,
+        validate(value) {
+            if (!validator.isAlphanumeric(value, 'pl-PL')) {
+                throw new Error('Name cannot contain special characters.')
+            }
+        }
     },
     lastName: {
         type: String,
@@ -35,7 +40,13 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         required: true,
         minLength: 2,
+        validate(value) {
+            if (!validator.isAlphanumeric(value, 'pl-PL')) {
+                throw new Error('Name cannot contain special characters.')
+            }
+        }
     },
+
     userType: {
         type: String,
         required: true,
