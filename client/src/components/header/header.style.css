@@ -1,0 +1,16 @@
+.header {
+    border: 1px solid;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+}
+
+.carousel-item1 {
+    height: 40px;
+    width: 100%;
+    background: #7496c5;
+    color: #fff;
+    font-size: 11px;
+    font-family: 'Oswald';
+    letter-spacing: 2px;
+}
