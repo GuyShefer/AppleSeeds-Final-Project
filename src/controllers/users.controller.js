@@ -20,7 +20,7 @@ const addUser = async (req, res) => {
     try {
         const user = new User(extractUser);
         await user.save();
-        sendWelcomeEmail(email, firstName); /////////
+        // sendWelcomeEmail(email, firstName); /////////
         const token = await user.generateAuthToken();
         res.status(201).send({ messege: 'User has been created.', token });
     } catch (err) {

@@ -1,0 +1,13 @@
+
+.nav-bar {
+    height: 170px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 170px;
+    height: 170px;
+    background: url('../../../images/logo-img.jpg') no-repeat center center/cover;
+}
