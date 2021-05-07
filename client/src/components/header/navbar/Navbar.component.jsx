@@ -9,7 +9,9 @@ const Navbar = () => {
 
     const [show, setShow] = useState(false);
     const [loginModalShow, setLoginModalShow] = useState(false);
+    const [registerModalShow, setRegisterModalShowModalShow] = useState(false);
     const [userLoginDetails, setUserLoginDetails] = useState({ email: '', password: '' });
+    const [userRegister, setUserRegister] = useState({ email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' });
     const url = 'https://final-project-appleseeds.herokuapp.com';
 
     const showDropdown = (e) => {
@@ -20,14 +22,15 @@ const Navbar = () => {
     }
     const handleClose = () => {
         setLoginModalShow(false);
+        setRegisterModalShowModalShow(false);
     }
 
     const handleUserAccount = async () => {
-        console.log('asd');
         const token = JSON.parse(localStorage.getItem('token'));
         if (token) {
             const response = await axios.get(url + '/api/users/getAccInfo', { headers: { Authorization: `Bearer ${token}` } })
-            console.log('lalalala', response);
+            console.log(response.data);
+            /// notificate the user that the log in succsess
         } else {
             setLoginModalShow(true);
         }
@@ -46,6 +49,28 @@ const Navbar = () => {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const registerUser = async () => {
+        console.log(userRegister);
+        try {
+            const response = await axios.post(url + '/api/users/', userRegister);
+            console.log(response.data);
+            // setToken(response.data.token);
+            handleClose();
+        } catch (err) {
+            console.log(err.message);
+        }
+    }
+
+    const swapToRegisterModal = () => {
+        setLoginModalShow(false);
+        setRegisterModalShowModalShow(true);
+    }
+
+    const swapToLoginModal = () => {
+        setRegisterModalShowModalShow(false);
+        setLoginModalShow(true);
     }
 
     return (
@@ -81,9 +106,10 @@ const Navbar = () => {
                 </div>
             </div>
 
+            {/* LOGIN MODAL */}
             <Modal show={loginModalShow} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Login</Modal.Title>
+                    <Modal.Title>Log in to your account</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
@@ -94,12 +120,85 @@ const Navbar = () => {
                     <Form.Label>Password :</Form.Label>
                     <Form.Control type="password" placeholder="Enter password" required onChange={(e) =>
                         setUserLoginDetails({ email: userLoginDetails.email, password: e.target.value })} />
+                    <br />
+                    <div className="modal-btns">
+                        <button className="ui inverted green button" onClick={loginUser}>LOG IN</button>
+                    </div>
 
                 </Modal.Body>
                 <Modal.Footer>
+                    <p className="register-q">No account? <span className="sing-up-btn" onClick={swapToRegisterModal}> Sign up</span></p>
+                </Modal.Footer>
+            </Modal>
 
-                    <button className="ui inverted secondary button" onClick={handleClose}>CLOSE</button>
-                    <button className="ui inverted green button" onClick={loginUser}>LOG IN</button>
+            {/* REGISTER MODAL */}
+            <Modal show={registerModalShow} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Create Your Account</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    <Form.Control type="email" placeholder="Enter Email" required onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.email = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="password" placeholder="Enter Password" required onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.password = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="text" placeholder="First Name" onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.firstName = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="text" placeholder="Last Name" onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.lastName = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="text" placeholder="Phone Number" onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.phone = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="text" placeholder="City" onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.address.city = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="text" placeholder="Street" onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.address.street = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="number" placeholder="House Number" onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.address.houseNumber = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+                    <Form.Control type="number" placeholder="Zip Code" onChange={(e) => {
+                        const tempUser = userRegister;
+                        tempUser.address.zip = e.target.value;
+                        setUserRegister(tempUser)
+                    }} />
+                    <br />
+
+                    <div className="modal-btns">
+                        <button className="ui inverted green button" onClick={registerUser}>REGISTER</button>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <p className="register-q">Already have an account? <span className="sing-up-btn" onClick={swapToLoginModal}> Log in</span></p>
                 </Modal.Footer>
             </Modal>
         </>

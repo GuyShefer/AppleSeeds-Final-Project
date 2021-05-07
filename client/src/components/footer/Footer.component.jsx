@@ -17,7 +17,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <hr />
-                <p>© 2021 Havaya Jewelry. All rights reserved</p>
+                <p className="rights">© 2021 Havaya Jewelry. All rights reserved</p>
             </footer>
         </>
     )
