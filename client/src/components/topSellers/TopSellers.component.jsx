@@ -19,7 +19,6 @@ const TopSellers = () => {
     return (
 
         <>
-            {console.log(products)}
             <div className="top-sellers-grid">
                 {products.map(product => {
                     return <ProductCard key={product._id} product={product} />

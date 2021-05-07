@@ -64,6 +64,10 @@ const logoutAll = async (req, res) => {
     }
 }
 
+const getUserInfo = (req, res) => {
+    res.status(200).json(req.user);
+}
+
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find({});
@@ -122,4 +126,5 @@ module.exports = {
     logoutAll,
     getAllUsers,
     updateUser,
+    getUserInfo,
 }
