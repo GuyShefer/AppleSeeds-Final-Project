@@ -1,3 +1,25 @@
 .main {
     height: 200vh;
 }
+
+.container-image {
+    height: 600px;
+    width: 100%;
+    background: url('../../images/section-2.jpg') no-repeat center center/cover;
+}
+
+.best-sellers-section {
+    height: 78vh;
+}
+
+.best-sellers-section .sub-title {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 400;
+}
+
+.best-sellers-section .sub-title h2 {
+    font-weight: 400;
+}

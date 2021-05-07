@@ -12,7 +12,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Header />
-        <div>
+        <div className="index-section">
           <Route exact path='/' component={Main} />
         </div>
       </BrowserRouter>
