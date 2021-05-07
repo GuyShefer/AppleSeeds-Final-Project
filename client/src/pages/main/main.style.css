@@ -1,5 +1,5 @@
 .main {
-    height: 200vh;
+    height: 176vh;
 }
 
 .container-image {
@@ -28,4 +28,23 @@
     padding: 20px 0;
     margin: 0 50px;
     height: 100%;
+}
+
+.welcome-text {
+    background: #90a9cb;
+    color: #fff;
+    align-items: center;
+    text-align: center;
+}
+
+.welcome-text h3 {
+    font-size: 38px;
+    padding-top: 10px;
+    margin: 20px 0;
+}
+
+.welcome-text p {
+    font-size: 20px;
+    padding: 0 250px;
+    padding-bottom: 30px;
 }
