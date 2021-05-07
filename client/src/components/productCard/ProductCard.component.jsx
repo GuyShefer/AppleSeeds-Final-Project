@@ -15,9 +15,6 @@ const ProductCard = (props) => {
 
     return (
         <>
-            {console.log('product component', productDetails)}
-
-            {/* {console.log(productDetails.product.image.data)} */}
             <div className="card-wrapper">
 
                 <div className="product-card">

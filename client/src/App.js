@@ -6,6 +6,7 @@ import Main from './pages/main/Main.component';
 import Header from './components/header/Header.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/footer/Footer.component';
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
 

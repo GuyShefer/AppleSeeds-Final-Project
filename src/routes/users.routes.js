@@ -8,6 +8,10 @@ userRouter.post('/', (req, res) => {
     userController.addUser(req, res);
 });
 
+userRouter.get('/getAccInfo', auth, (req, res) => {
+    userController.getUserInfo(req, res);
+})
+
 userRouter.post('/login', (req, res) => {
     userController.login(req, res);
 });
