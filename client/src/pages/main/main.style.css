@@ -8,11 +8,11 @@
     background: url('../../images/section-2.jpg') no-repeat center center/cover;
 }
 
-.best-sellers-section {
-    height: 78vh;
+.top-sellers-section {
+    height: 72vh;
 }
 
-.best-sellers-section .sub-title {
+.top-sellers-section .sub-title {
     height: 100px;
     display: flex;
     justify-content: center;
@@ -20,6 +20,12 @@
     font-weight: 400;
 }
 
-.best-sellers-section .sub-title h2 {
+.top-sellers-section .sub-title h2 {
     font-weight: 400;
+}
+
+.top-sellers-container-cards {
+    padding: 20px 0;
+    margin: 0 50px;
+    height: 100%;
 }

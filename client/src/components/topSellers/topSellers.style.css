@@ -1,0 +1,11 @@
+
+.top-sellers-grid {
+    height: 100%;
+    padding: 40px 200px;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-template-rows: repeat(2, auto);
+    grid-gap: 40px;
+    justify-content: center;
+}
+
