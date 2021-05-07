@@ -4,7 +4,9 @@
     height: 100%;
     padding: 0 150px;
     text-align: center;
-    background: #fff
+    background: #fff;
+    overflow: hidden;
+    margin-top: 220px;
 }
 
 .top-footer-serction {

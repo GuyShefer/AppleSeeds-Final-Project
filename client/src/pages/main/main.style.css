@@ -9,7 +9,7 @@
 }
 
 .top-sellers-section {
-    height: 72vh;
+    height: 90vh;
 }
 
 .top-sellers-section .sub-title {
@@ -35,6 +35,7 @@
     color: #fff;
     align-items: center;
     text-align: center;
+    margin-top: 20px;
 }
 
 .welcome-text h3 {
