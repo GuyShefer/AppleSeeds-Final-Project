@@ -6,6 +6,7 @@
     align-items: center;
     font-family: 'Oswald';
     letter-spacing: 1.6px;
+    background: #fff;
 }
 
 .logo {
@@ -109,7 +110,20 @@
 /*  */
 
 .user-details {
-    width: 200px;
-    border: 1px solid;
+    width: 120px;
+    margin-left: 100px;
     text-align: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.icon-detail {
+    cursor: pointer;
+}
+
+.cart-amount {
+    font-size: 12px;
+    margin-left: 8px;
+    line-height: 1.3px;
+    font-weight: 800;
 }

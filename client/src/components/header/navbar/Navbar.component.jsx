@@ -19,7 +19,6 @@ const Navbar = () => {
 
                 <div className="nav-list-menu">
                     <ul className="nav-list">
-
                         <li>
                             <Dropdown show={show}
                                 onMouseEnter={showDropdown}
@@ -41,7 +40,8 @@ const Navbar = () => {
                 </div>
 
                 <div className="user-details">
-                    asd
+                    <div className="icon-detail"><i className="fas fa-user"></i></div>
+                    <div className="icon-detail"><i className="fas fa-shopping-bag"></i><span className="cart-amount">1</span></div>
                 </div>
             </div>
         </>
