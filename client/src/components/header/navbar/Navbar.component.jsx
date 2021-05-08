@@ -4,6 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -12,6 +13,7 @@ const Navbar = () => {
     const [registerModalShow, setRegisterModalShowModalShow] = useState(false);
     const [userLoginDetails, setUserLoginDetails] = useState({ email: '', password: '' });
     const [userRegister, setUserRegister] = useState({ email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' });
+    const [user, setUser] = useState({});
     const url = 'https://final-project-appleseeds.herokuapp.com';
 
     const showDropdown = (e) => {
@@ -30,6 +32,7 @@ const Navbar = () => {
         if (token) {
             const response = await axios.get(url + '/api/users/getAccInfo', { headers: { Authorization: `Bearer ${token}` } })
             console.log(response.data);
+            setUser(response.data);
             /// notificate the user that the log in succsess
         } else {
             setLoginModalShow(true);
@@ -45,6 +48,8 @@ const Navbar = () => {
             localStorage.setItem('token', JSON.stringify(await response.data.token));
             // setToken(response.data.token);
             console.log(response.data);
+            console.log(response.data.token);
+            setUser(response.data.user[0])
             handleClose();
         } catch (err) {
             console.log(err);
@@ -97,6 +102,7 @@ const Navbar = () => {
                         </li>
                         <li className="nav-list-item"><span>FAQ</span></li>
                         <li className="nav-list-item"><span>OUR STORY</span></li>
+                        {user.userType === 'admin' ? <Link to={{ pathname: "/admin", userType: { type: `${user.userType}` } }}> <li className="nav-list-item"><span>ADMIN</span></li> </Link> : null}
                     </ul>
                 </div>
 
