@@ -8,6 +8,10 @@ const purchaseSchema = new mongoose.Schema({
         trim: true,
         ref: 'User',
     },
+    ownerName: {
+        type: String,
+        trim: true,
+    },
     products: [{
         productId: {
             type: String,

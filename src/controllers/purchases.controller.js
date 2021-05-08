@@ -1,6 +1,6 @@
 const Product = require('../models/product.model');
 const Purchase = require('../models/purchase.model');
-
+const User = require('../models/user.model');
 
 const purchaseProducts = async (req, res) => {
     try {
@@ -11,8 +11,9 @@ const purchaseProducts = async (req, res) => {
         else if (!await isValiadTotalPriceAndQuantity(extractPurchase) || totalPrice < 0) {
             return res.status(404).send('Total price is not valid');
         }
-        
+
         extractPurchase.owner = req.user.id;
+        extractPurchase.ownerName = `${req.user.firstName} ${req.user.lastName}`;
         const purchase = new Purchase(extractPurchase);
         if (!purchase) {
             return res.status(404).send();
@@ -27,7 +28,7 @@ const purchaseProducts = async (req, res) => {
 
 const getAllPurchases = async (req, res) => {
     try {
-        const purchases = await Purchase.find({});
+        const purchases = await Purchase.find({}, {totalPrice : 1, ownerName: 1, date: 1});
         if (!purchases) {
             return res.status(404).send();
         }

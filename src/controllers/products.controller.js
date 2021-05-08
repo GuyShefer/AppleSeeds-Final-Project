@@ -40,7 +40,7 @@ const getAllProducts = async (req, res) => {
 
 const getAllBestSellerProducts = async (req, res) => {
     try {
-        const products = await Product.find({ bestSeller: true }, { image: 1, price: 1, productName: 1 });
+        const products = await Product.find({ bestSeller: true }, { image: 1, price: 1, productName: 1 }).limit(8);
         if (!products) {
             return res.status(404).send();
         }

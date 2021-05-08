@@ -127,3 +127,30 @@
     line-height: 1.3px;
     font-weight: 800;
 }
+
+/* modal */
+
+.modal-btns {
+    float: right;
+}
+
+.modal-footer .register-q {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    letter-spacing: 1.1px;
+    color: #333;
+}
+
+.sing-up-btn {
+    cursor: pointer;
+}
+
+.close {
+    background: none;
+}
+
+[type=button]:not(:disabled):hover {
+    color: black;
+    font-weight: 500;
+}

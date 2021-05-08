@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './topSellers.style.css';
 import axios from 'axios';
 import ProductCard from '../productCard/ProductCard.component';
+import url from '../../utilities/serverURL';
 
 const TopSellers = () => {
 
     const [products, setProducts] = useState([]);
-    const url = 'https://final-project-appleseeds.herokuapp.com';
 
     useEffect(() => {
         const getAllTopSellers = async () => {
