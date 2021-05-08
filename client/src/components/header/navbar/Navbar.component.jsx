@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import url from '../../../utilities/serverURL';
 
 const Navbar = () => {
 
@@ -14,7 +15,6 @@ const Navbar = () => {
     const [userLoginDetails, setUserLoginDetails] = useState({ email: '', password: '' });
     const [userRegister, setUserRegister] = useState({ email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' });
     const [user, setUser] = useState({});
-    const url = 'https://final-project-appleseeds.herokuapp.com';
 
     const showDropdown = (e) => {
         setShow(!show);
