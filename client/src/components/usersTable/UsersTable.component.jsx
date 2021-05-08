@@ -19,8 +19,6 @@ const UsersTable = () => {
 
     return (
         <>
-            {console.log(users)}
-            <h3>users table</h3>
             <div className="users-table">
                 <Table striped bordered hover variant="dark">
                     <thead>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PurchasesTable from '../../components/purchasesTable/PurchasesTable.component';
 import UsersTable from '../../components/usersTable/UsersTable.component';
 import './admin.style.css';
 
@@ -16,11 +17,9 @@ const Admin = (props) => {
     const componentSwitch = (param) => {
         switch (param) {
             case 'users':
-                // <UsersTable/>
                 return <UsersTable />
             case 'purchases':
-                // <UsersTable/>
-                return <h4>purchases</h4>
+                return <PurchasesTable />
             case 'products':
                 // <UsersTable/>
                 return <h4>products</h4>

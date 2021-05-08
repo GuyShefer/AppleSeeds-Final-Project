@@ -5,6 +5,10 @@
     text-align: center;
 }
 
+.admin-nav-bar {
+    margin: 30px 0;
+}
+
 .admin-nav-bar ul{
     display: flex;
     justify-content: center;

@@ -31,7 +31,6 @@ const Navbar = () => {
         const token = JSON.parse(localStorage.getItem('token'));
         if (token) {
             const response = await axios.get(url + '/api/users/getAccInfo', { headers: { Authorization: `Bearer ${token}` } })
-            console.log(response.data);
             setUser(response.data);
             /// notificate the user that the log in succsess
         } else {
