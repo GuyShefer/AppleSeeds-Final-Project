@@ -1,0 +1,20 @@
+.all-products-container {
+    display: flex;
+    justify-content: center;
+}
+
+.all-products-grid {
+    padding: 20px 0;
+    margin: 30px 50px 0;
+    display: inline-grid;
+    grid-gap: 30px;
+    justify-items: center;
+    grid-template-columns: repeat(4, auto);
+}
+
+.img-advert {
+    width: 100%;
+    height: 100%;
+    background: url('../../images/section-3.jpg') no-repeat center center/cover;
+    grid-area: 1/3/3/5;
+}

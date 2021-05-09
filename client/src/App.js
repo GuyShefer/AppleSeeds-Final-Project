@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/footer/Footer.component';
 import 'semantic-ui-css/semantic.min.css'
 import Admin from './pages/admin/Admin.componenet';
+import AllProducts from './pages/allProducts/AllProducts.component';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <div className="index-section">
           <Route exact path='/' component={Main} />
           <Route exact path='/admin' component={Admin} />
+          <Route exact path='/products' component={AllProducts} />
         </div>
         <Footer/>
       </BrowserRouter>

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import CreateProduct from '../../components/createProduct/CreateProduct.component';
 import PurchasesTable from '../../components/purchasesTable/PurchasesTable.component';
 import UsersTable from '../../components/usersTable/UsersTable.component';
 import './admin.style.css';
@@ -20,9 +22,8 @@ const Admin = (props) => {
                 return <UsersTable />
             case 'purchases':
                 return <PurchasesTable />
-            case 'products':
-                // <UsersTable/>
-                return <h4>products</h4>
+            case 'create':
+                return <CreateProduct />
             default:
                 return <UsersTable />
         }
@@ -37,7 +38,8 @@ const Admin = (props) => {
                         <ul>
                             <li onClick={() => setComponenetToDisplay('users')}>Users</li>
                             <li onClick={() => setComponenetToDisplay('purchases')}>Purchases</li>
-                            <li onClick={() => setComponenetToDisplay('products')}>Products</li>
+                            <li onClick={() => setComponenetToDisplay('create')}>Create Product</li>
+                            <li><Link to={{ pathname: "/products", userType: { type: `${userType}` } }}><span> All Products</span></Link></li>
                         </ul>
                     </div>
                     {/*  */}

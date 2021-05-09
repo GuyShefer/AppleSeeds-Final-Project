@@ -28,7 +28,7 @@ const ProductCard = (props) => {
                     </div>
                 </div>
 
-
+                    {props.userType && <div><button>yossi</button></div>}
             </div>
         </>
     )
