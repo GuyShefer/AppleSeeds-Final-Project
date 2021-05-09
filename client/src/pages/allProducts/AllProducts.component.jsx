@@ -23,17 +23,26 @@ const AllProducts = (props) => {
 
     }, [props.history.location.userType])
 
+    const forceUpdateComponent = (productId) => {
+        const filteredProducts = products.filter(product => product._id !== productId);
+        setProducts(filteredProducts);
+    }
+
 
     return (
         <>
             {console.log(products)}
             {console.log(userType)}
             <div className="all-products-container">
-                <div className="all-products-grid">
-                    <div className="img-advert"></div>
-                    {products.map(product => {
-                        return <ProductCard key={product._id} product={product} userType={userType} />
-                    })}
+                <div className="horizontal-line">
+                    <hr />
+                    <div className="all-products-grid">
+                        <div className="img-advert"></div>
+                        {products.map(product => {
+                            return <ProductCard key={product._id} product={product} userType={userType} forceUpdate={forceUpdateComponent} />
+                        })}
+                    </div>
+                    <hr />
                 </div>
             </div>
         </>

@@ -33,9 +33,13 @@
 .welcome-text {
     background: #90a9cb;
     color: #fff;
-    align-items: center;
     text-align: center;
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .welcome-text h3 {
@@ -45,7 +49,7 @@
 }
 
 .welcome-text p {
+    min-width: 50%;
     font-size: 20px;
-    padding: 0 250px;
-    padding-bottom: 30px;
+    padding: 0 120px;
 }
