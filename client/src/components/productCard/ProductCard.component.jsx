@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import './productCard.style.css';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
+import { useHistory } from 'react-router-dom';
+
 
 const ProductCard = (props) => {
 
     const [productDetails] = useState(props);
+    const history = useHistory();
 
     const arrayBufferToBase64 = (buffer) => {
         let binary = '';
@@ -22,7 +25,12 @@ const ProductCard = (props) => {
     }
 
     const updateProduct = () => {
-        console.log('update');
+        console.log(productDetails);
+        console.log('update'); // have to send user type and product details
+        history.push({
+            pathname: `/saveProduct`,
+            productDetails: productDetails,
+        });
     }
 
     return (
