@@ -80,7 +80,7 @@ const Navbar = () => {
     return (
         <>
             <div className="nav-bar">
-                <div className="logo"></div>
+                <Link to="/"><div className="logo"></div></Link>
 
                 <div className="nav-list-menu">
                     <ul className="nav-list">
@@ -91,7 +91,7 @@ const Navbar = () => {
                                 <Dropdown.Toggle className="nav-item" > SHOP </Dropdown.Toggle>
                                 <Dropdown.Menu >
                                     <Dropdown.Item>Best Sellers</Dropdown.Item>
-                                    <Dropdown.Item>Shop All</Dropdown.Item>
+                                    <Link to="products" className="dropdown-item" role="button">Shop All</Link>
                                     <Dropdown.Item>Earings</Dropdown.Item>
                                     <Dropdown.Item>Rings</Dropdown.Item>
                                     <Dropdown.Item>Necklaces</Dropdown.Item>
