@@ -22,6 +22,11 @@
     font-weight: 600;
 }
 
-.admin-nav-bar li:hover {
+.admin-nav-bar a {
+    color: #212529;
+}
+
+.admin-nav-bar li:hover,
+.admin-nav-bar a:hover {
     color: royalblue;
 }
