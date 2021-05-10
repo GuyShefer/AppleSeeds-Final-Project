@@ -32,7 +32,7 @@ const productSchema = new mongoose.Schema({
     },
     image: {
         type: Buffer,
-        required: true,
+        // required: true,
     },
     bestSeller : {
         type: Boolean,

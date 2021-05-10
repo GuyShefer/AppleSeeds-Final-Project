@@ -3,11 +3,13 @@ import './saveProduct.style.css';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
+import { useHistory } from 'react-router-dom';
 
 const SaveProduct = (props) => {
 
     const [product, setProudct] = useState({ productName: '', productType: '', bestSeller: false, quantity: 0, price: 0, image: '', material: '' });
     const [updateProduct, setUpateProduct] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
 
@@ -29,8 +31,21 @@ const SaveProduct = (props) => {
         const token = JSON.parse(localStorage.getItem('token'));
 
         if (updateProduct) {
-            const response = await axios.patch("http://localhost:8000" + '/api/products/update/byId/' + product._id, { headers: { Authorization: `Bearer ${token}` } });
-            console.log(response);
+            let formData = new FormData();
+            formData.append('id', props.history.location.productId);
+            for (const [key, value] of Object.entries(product)) {
+                formData.append(key, value);
+            }
+            try {
+                const response = await axios.put("http://localhost:8000" + `/api/products/updateProduct/byform`, formData, { headers: { Authorization: `Bearer ${token}` } });
+                console.log(response);
+                history.push({
+                    pathname: `/admin`,
+                    userType: {type: 'admin'},
+                });
+            } catch (err) {
+                console.log(err);
+            }
         } else {
             // create new product
         }

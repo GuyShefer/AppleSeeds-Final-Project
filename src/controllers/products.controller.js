@@ -52,24 +52,34 @@ const getAllBestSellerProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const updates = Object.keys(req.body);
+    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller', 'productType', 'image', 'id'];
 
-    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller', 'productType'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
-
     if (!isValidOperation) {
-        return res.status(400).send({ error: "Invalid updaes" });
+        return res.status(406).send({ error: "Invalid updaes" });
     }
     else if (req.body.price < 0 || req.body.quantity < 0) {
-        return res.status(400).send({ error: "Price or Quantity isnt a positive value " });
+        return res.status(406).send({ error: "Price or Quantity isnt a positive value " });
     }
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        let extractProduct = { productType, material, price, quantity, productName, bestSeller } = req.body;
+
+        const product = await Product.findByIdAndUpdate(req.body.id, extractProduct, { new: true, runValidators: true });
+
         if (!product) {
             return res.status(404).send();
         }
+
+        if (req.file){
+            const buffer = await sharp(req.file.buffer).resize({ width: 600, height: 600 }).png().toBuffer();
+            product.image = buffer;
+            product.save();
+        }
+
         res.send(product);
-    } catch {
-        res.status(400).send(err);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err.message);
     }
 }
 
