@@ -25,11 +25,9 @@ const ProductCard = (props) => {
     }
 
     const updateProduct = () => {
-        console.log(productDetails);
-        console.log('update'); // have to send user type and product details
         history.push({
             pathname: `/saveProduct`,
-            productDetails: productDetails,
+            productId: productDetails.product._id,
         });
     }
 
