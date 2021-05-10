@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import CreateProduct from '../../components/createProduct/CreateProduct.component';
 import PurchasesTable from '../../components/purchasesTable/PurchasesTable.component';
+import SaveProduct from '../../components/saveProduct/SaveProduct.component';
 import UsersTable from '../../components/usersTable/UsersTable.component';
 import './admin.style.css';
 
@@ -23,7 +23,7 @@ const Admin = (props) => {
             case 'purchases':
                 return <PurchasesTable />
             case 'create':
-                return <CreateProduct />
+                return <SaveProduct />
             default:
                 return <UsersTable />
         }

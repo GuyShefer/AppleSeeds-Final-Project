@@ -53,7 +53,7 @@ const getAllBestSellerProducts = async (req, res) => {
 const updateProduct = async (req, res) => {
     const updates = Object.keys(req.body);
 
-    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller'];
+    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller', 'productType'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
 
     if (!isValidOperation) {
