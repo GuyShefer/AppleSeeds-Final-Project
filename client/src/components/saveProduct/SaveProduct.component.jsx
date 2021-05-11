@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './saveProduct.style.css';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
 import { useHistory } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 const SaveProduct = (props) => {
-
-    const [product, setProudct] = useState({ productName: '', productType: '', bestSeller: false, quantity: 0, price: 0, image: '', material: '' });
+    const initProductState = { productName: '', productType: '', bestSeller: false, quantity: 0, price: 0, image: '', material: '' };
+    const [product, setProudct] = useState(initProductState);
     const [updateProduct, setUpateProduct] = useState(false);
     const history = useHistory();
 
@@ -29,25 +30,31 @@ const SaveProduct = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = JSON.parse(localStorage.getItem('token'));
+        let formData = new FormData();
+        for (const [key, value] of Object.entries(product)) {
+            formData.append(key, value);
+        }
 
         if (updateProduct) {
-            let formData = new FormData();
             formData.append('id', props.history.location.productId);
-            for (const [key, value] of Object.entries(product)) {
-                formData.append(key, value);
-            }
             try {
-                const response = await axios.put("http://localhost:8000" + `/api/products/updateProduct/byform`, formData, { headers: { Authorization: `Bearer ${token}` } });
+                const response = await axios.put(url + `/api/products/updateProduct/byform`, formData, { headers: { Authorization: `Bearer ${token}` } });
                 console.log(response);
                 history.push({
                     pathname: `/admin`,
-                    userType: {type: 'admin'},
+                    userType: { type: 'admin' },
                 });
             } catch (err) {
                 console.log(err);
             }
-        } else {
-            // create new product
+        } else { // create new product
+            try {
+                const response = await axios.post(url + "/api/products", formData, { headers: { Authorization: `Bearer ${token}` } });
+                console.log(response);
+                setProudct(initProductState);
+            } catch (err) {
+                console.log(err.response.data);
+            }
         }
     }
 
@@ -96,6 +103,23 @@ const SaveProduct = (props) => {
                         </Form.Control>
                     </Form.Group>
 
+                    <Form.Group>
+                        <Form.Label>Amount</Form.Label>
+                        <Form.Control type="number" min="0" placeholder="Amount" value={product.quantity} required onChange={e => {
+                            setProudct({
+                                productName: product.productName,
+                                productType: product.productType,
+                                bestSeller: product.bestSeller,
+                                quantity: e.target.value,
+                                price: product.price,
+                                image: product.image,
+                                material: product.material
+                            })
+                        }} />
+                        {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
+                    </Form.Group>
+
+
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Material</Form.Label>
                         <Form.Control as="select" value={product.material} required onChange={e => {
@@ -115,21 +139,6 @@ const SaveProduct = (props) => {
                         </Form.Control>
                     </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control type="number" min="0" placeholder="Amount" value={product.quantity} required onChange={e => {
-                            setProudct({
-                                productName: product.productName,
-                                productType: product.productType,
-                                bestSeller: product.bestSeller,
-                                quantity: e.target.value,
-                                price: product.price,
-                                image: product.image,
-                                material: product.material
-                            })
-                        }} />
-                        {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
-                    </Form.Group>
 
                     <Form.Group>
                         <Form.Label>Price</Form.Label>
@@ -176,8 +185,10 @@ const SaveProduct = (props) => {
                             })
                         }} />
                     </Form.Group>
-
-                    <Button variant="primary" type="submit"> Submit</Button>
+                    <br />
+                    <div>
+                        <Button variant="primary" type="submit"> Submit</Button>
+                    </div>
                 </Form>
             </div>
         </>
