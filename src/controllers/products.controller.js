@@ -69,6 +69,7 @@ const updateProduct = async (req, res) => {
     }
     try {
         let extractProduct = { productType, material, price, quantity, productName, bestSeller } = req.body;
+        delete extractProduct['image']
 
         const product = await Product.findByIdAndUpdate(req.body.id, extractProduct, { new: true, runValidators: true });
 
