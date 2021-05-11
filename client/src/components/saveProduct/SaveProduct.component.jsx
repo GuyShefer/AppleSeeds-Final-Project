@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 
 const SaveProduct = (props) => {
-    const initProductState = { productName: '', productType: '', bestSeller: false, quantity: 0, price: 0, image: '', material: '' };
+    const initProductState = { productName: '', productType: 'earrings', bestSeller: false, quantity: 0, price: 0, image: '', material: 'silver' };
     const [product, setProudct] = useState(initProductState);
     const [updateProduct, setUpateProduct] = useState(false);
     const history = useHistory();
@@ -83,7 +83,7 @@ const SaveProduct = (props) => {
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Product type</Form.Label>
-                        <Form.Control value={product.productType} as="select" required onChange={e => {
+                        <Form.Control defaultValue={product.productType} as="select" required onChange={e => {
                             setProudct({
                                 productName: product.productName,
                                 productType: e.target.value,
@@ -122,7 +122,7 @@ const SaveProduct = (props) => {
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Material</Form.Label>
-                        <Form.Control as="select" value={product.material} required onChange={e => {
+                        <Form.Control as="select" defaultValue={product.material} required onChange={e => {
                             setProudct({
                                 productName: product.productName,
                                 productType: product.productType,
