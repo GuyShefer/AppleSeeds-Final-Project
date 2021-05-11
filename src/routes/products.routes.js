@@ -27,7 +27,7 @@ productRouter.get('/bestSeller/all', (req, res) => {
     productController.getAllBestSellerProducts(req, res);
 });
 
-productRouter.patch('/update/byId/:id', auth, adminAuth, upload.single('image'), (req, res) => {
+productRouter.put('/updateProduct/byform', auth, adminAuth, upload.single('image'), (req, res) => {
     productController.updateProduct(req, res);
 });
 

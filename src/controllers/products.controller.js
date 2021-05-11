@@ -11,6 +11,9 @@ const createProduct = async (req, res) => {
     else if (price < 0 || quantity < 0) {
         return res.status(406).send('Price or Quantity isnt a positive value');
     }
+    else if (await isProductNameExist(productName)) {
+        return res.status(406).send('Product Name is already exists.');
+    }
 
     try {
         const product = new Product(extractProduct);
@@ -20,10 +23,13 @@ const createProduct = async (req, res) => {
 
         res.status(201).send({ messege: 'Product has been created.' });
     } catch (err) {
-        console.log(err.message);
-        console.log('===');
-        res.status(400).send(err.message);
+        res.status(404).send(err.message);
     }
+}
+
+const isProductNameExist = async (name) => {
+    const user = await Product.findOne({ productName: name });
+    return user ? true : false;
 }
 
 const getAllProducts = async (req, res) => {
@@ -52,24 +58,34 @@ const getAllBestSellerProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const updates = Object.keys(req.body);
+    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller', 'productType', 'image', 'id'];
 
-    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller', 'productType'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
-
     if (!isValidOperation) {
-        return res.status(400).send({ error: "Invalid updaes" });
+        return res.status(406).send({ error: "Invalid updaes" });
     }
     else if (req.body.price < 0 || req.body.quantity < 0) {
-        return res.status(400).send({ error: "Price or Quantity isnt a positive value " });
+        return res.status(406).send({ error: "Price or Quantity isnt a positive value " });
     }
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        let extractProduct = { productType, material, price, quantity, productName, bestSeller } = req.body;
+
+        const product = await Product.findByIdAndUpdate(req.body.id, extractProduct, { new: true, runValidators: true });
+
         if (!product) {
             return res.status(404).send();
         }
+
+        if (req.file) {
+            const buffer = await sharp(req.file.buffer).resize({ width: 600, height: 600 }).png().toBuffer();
+            product.image = buffer;
+            product.save();
+        }
+
         res.send(product);
-    } catch {
-        res.status(400).send(err);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err.message);
     }
 }
 
@@ -109,7 +125,7 @@ const getProductById = async (req, res) => {
 
 const getAllProductsByType = async (req, res) => {
     const productType = req.params.productType;
-    const allowTypes = ['earrings', 'ring', 'necklace', 'bracelet', 'piercings', 'macrame'];
+    const allowTypes = ['earrings', 'rings', 'necklaces', 'bracelets', 'piercings', 'macrame'];
     const isValidOperation = allowTypes.includes(productType);
 
     if (!isValidOperation) {

@@ -10,6 +10,7 @@ import 'semantic-ui-css/semantic.min.css'
 import Admin from './pages/admin/Admin.componenet';
 import AllProducts from './pages/allProducts/AllProducts.component';
 import SaveProduct from './components/saveProduct/SaveProduct.component';
+import ProductsType from './pages/productsTypes/ProductsType.component';
 
 function App() {
 
@@ -22,6 +23,8 @@ function App() {
           <Route exact path='/admin' component={Admin} />
           <Route exact path='/products' component={AllProducts} />
           <Route exact path='/saveProduct' component={SaveProduct} />
+          <Route exact path='/products/byType' component={ProductsType} />
+
         </div>
         <Footer/>
       </BrowserRouter>

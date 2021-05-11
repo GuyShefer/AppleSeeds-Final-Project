@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './saveProduct.style.css';
-import { Form, Button } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
+import { useHistory } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 const SaveProduct = (props) => {
-
-    const [product, setProudct] = useState({ productName: '', productType: '', bestSeller: false, quantity: 0, price: 0, image: '', material: '' });
+    const initProductState = { productName: '', productType: '', bestSeller: false, quantity: 0, price: 0, image: '', material: '' };
+    const [product, setProudct] = useState(initProductState);
     const [updateProduct, setUpateProduct] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
 
@@ -27,12 +30,31 @@ const SaveProduct = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = JSON.parse(localStorage.getItem('token'));
+        let formData = new FormData();
+        for (const [key, value] of Object.entries(product)) {
+            formData.append(key, value);
+        }
 
         if (updateProduct) {
-            const response = await axios.patch("http://localhost:8000" + '/api/products/update/byId/' + product._id, { headers: { Authorization: `Bearer ${token}` } });
-            console.log(response);
-        } else {
-            // create new product
+            formData.append('id', props.history.location.productId);
+            try {
+                const response = await axios.put(url + `/api/products/updateProduct/byform`, formData, { headers: { Authorization: `Bearer ${token}` } });
+                console.log(response);
+                history.push({
+                    pathname: `/admin`,
+                    userType: { type: 'admin' },
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        } else { // create new product
+            try {
+                const response = await axios.post(url + "/api/products", formData, { headers: { Authorization: `Bearer ${token}` } });
+                console.log(response);
+                setProudct(initProductState);
+            } catch (err) {
+                console.log(err.response.data);
+            }
         }
     }
 
@@ -73,13 +95,30 @@ const SaveProduct = (props) => {
                             })
                         }}>
                             <option value="earrings">earrings</option>
-                            <option value="ring">ring</option>
-                            <option value="necklace">necklace</option>
-                            <option value="bracelet">bracelet</option>
+                            <option value="rings">ring</option>
+                            <option value="necklaces">necklace</option>
+                            <option value="bracelets">bracelet</option>
                             <option value="piercings">piercings</option>
                             <option value="macrame">macrame</option>
                         </Form.Control>
                     </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Amount</Form.Label>
+                        <Form.Control type="number" min="0" placeholder="Amount" value={product.quantity} required onChange={e => {
+                            setProudct({
+                                productName: product.productName,
+                                productType: product.productType,
+                                bestSeller: product.bestSeller,
+                                quantity: e.target.value,
+                                price: product.price,
+                                image: product.image,
+                                material: product.material
+                            })
+                        }} />
+                        {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
+                    </Form.Group>
+
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Material</Form.Label>
@@ -100,21 +139,6 @@ const SaveProduct = (props) => {
                         </Form.Control>
                     </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control type="number" min="0" placeholder="Amount" value={product.quantity} required onChange={e => {
-                            setProudct({
-                                productName: product.productName,
-                                productType: product.productType,
-                                bestSeller: product.bestSeller,
-                                quantity: e.target.value,
-                                price: product.price,
-                                image: product.image,
-                                material: product.material
-                            })
-                        }} />
-                        {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
-                    </Form.Group>
 
                     <Form.Group>
                         <Form.Label>Price</Form.Label>
@@ -161,8 +185,10 @@ const SaveProduct = (props) => {
                             })
                         }} />
                     </Form.Group>
-
-                    <Button variant="primary" type="submit"> Submit</Button>
+                    <br />
+                    <div>
+                        <Button variant="primary" type="submit"> Submit</Button>
+                    </div>
                 </Form>
             </div>
         </>

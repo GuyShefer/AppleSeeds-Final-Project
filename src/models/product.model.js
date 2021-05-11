@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
         required: true,
-        enum: ['earrings', 'ring', 'necklace', 'bracelet', 'piercings', 'macrame'],
+        enum: ['earrings', 'rings', 'necklaces', 'bracelets', 'piercings', 'macrame'],
     },
     material: {
         type: String,
@@ -32,7 +32,7 @@ const productSchema = new mongoose.Schema({
     },
     image: {
         type: Buffer,
-        required: true,
+        // required: true,
     },
     bestSeller : {
         type: Boolean,
