@@ -23,8 +23,6 @@ const createProduct = async (req, res) => {
 
         res.status(201).send({ messege: 'Product has been created.' });
     } catch (err) {
-        console.log(err.message);
-        console.log('===');
         res.status(404).send(err.message);
     }
 }
@@ -127,7 +125,7 @@ const getProductById = async (req, res) => {
 
 const getAllProductsByType = async (req, res) => {
     const productType = req.params.productType;
-    const allowTypes = ['earrings', 'ring', 'necklace', 'bracelet', 'piercings', 'macrame'];
+    const allowTypes = ['earrings', 'rings', 'necklaces', 'bracelets', 'piercings', 'macrame'];
     const isValidOperation = allowTypes.includes(productType);
 
     if (!isValidOperation) {

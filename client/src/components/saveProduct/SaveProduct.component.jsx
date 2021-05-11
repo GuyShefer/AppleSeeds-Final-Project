@@ -95,9 +95,9 @@ const SaveProduct = (props) => {
                             })
                         }}>
                             <option value="earrings">earrings</option>
-                            <option value="ring">ring</option>
-                            <option value="necklace">necklace</option>
-                            <option value="bracelet">bracelet</option>
+                            <option value="rings">ring</option>
+                            <option value="necklaces">necklace</option>
+                            <option value="bracelets">bracelet</option>
                             <option value="piercings">piercings</option>
                             <option value="macrame">macrame</option>
                         </Form.Control>

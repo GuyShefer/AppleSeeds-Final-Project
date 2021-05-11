@@ -91,11 +91,11 @@ const Navbar = () => {
                                 <Dropdown.Toggle className="nav-item" > SHOP </Dropdown.Toggle>
                                 <Dropdown.Menu >
                                     <Dropdown.Item>Best Sellers</Dropdown.Item>
-                                    <Link to="products" className="dropdown-item" role="button">Shop All</Link>
-                                    <Dropdown.Item>Earings</Dropdown.Item>
-                                    <Dropdown.Item>Rings</Dropdown.Item>
-                                    <Dropdown.Item>Necklaces</Dropdown.Item>
-                                    <Dropdown.Item>Bracelets</Dropdown.Item>
+                                    <Link to="/products" className="dropdown-item" role="button">Shop All</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'earrings' }} className="dropdown-item" role="button">Earrings</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'rings' }} className="dropdown-item" role="button">Rings</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'necklaces' }} className="dropdown-item" role="button">Necklaces</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'bracelets' }} className="dropdown-item" role="button">Bracelets</Link>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </li>
