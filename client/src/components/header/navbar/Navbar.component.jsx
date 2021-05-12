@@ -15,19 +15,25 @@ const Navbar = () => {
     const [userLoginDetails, setUserLoginDetails] = useState({ email: '', password: '' });
     const [userRegister, setUserRegister] = useState({ email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' });
     const [user, setUser] = useState({});
+    const [showUserDropDown, setShowUserDropDown] = useState(false);
 
-    const showDropdown = (e) => {
+    const showDropdown = () => {
         setShow(!show);
     }
-    const hideDropdown = e => {
-        setShow(false);
+    const hideDropdown = () => {
+        setShow(!show);
     }
     const handleClose = () => {
         setLoginModalShow(false);
         setRegisterModalShowModalShow(false);
     }
 
+    const handleShowUserDropDown = () => {
+        setShowUserDropDown(!showUserDropDown);
+    }
+
     const handleUserAccount = async () => {
+        console.log(user);
         const token = JSON.parse(localStorage.getItem('token'));
         if (token) {
             const response = await axios.get(url + '/api/users/getAccInfo', { headers: { Authorization: `Bearer ${token}` } })
@@ -108,13 +114,13 @@ const Navbar = () => {
                 </div>
 
                 <div className="user-details">
-                    <Dropdown show={true} menualign={{ lg: 'left' }}>
-
-                        <Dropdown.Toggle className="user-icon-dropdown" onClick={handleUserAccount} ><i className="fas fa-user"></i> </Dropdown.Toggle>
+                    <Dropdown show={showUserDropDown && Object.keys(user).length > 0} menualign={{ lg: 'left' }} onMouseEnter={handleShowUserDropDown} onMouseLeave={handleShowUserDropDown}>
+                        {/* ############## */}
+                        <Dropdown.Toggle className="user-icon-dropdown" onClick={Object.keys(user).length === 0 ? handleUserAccount : null} ><i className="fas fa-user"></i> </Dropdown.Toggle>
                         <Dropdown.Menu >
                             <Dropdown.Item eventKey="1">My Account</Dropdown.Item>
                             <Dropdown.Item eventKey="2">Purchases History</Dropdown.Item>
-                            <Dropdown.Item eventKey="2">Log Out</Dropdown.Item>
+                            <Dropdown.Item eventKey="3">Log Out</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
 
