@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 
 const SaveProduct = (props) => {
-    const initProductState = { productName: '', productType: '', bestSeller: false, quantity: 0, price: 0, image: '', material: '' };
+    const initProductState = { productName: '', productType: 'earrings', bestSeller: false, quantity: 0, price: 0, image: '', material: 'silver', description : '' };
     const [product, setProudct] = useState(initProductState);
     const [updateProduct, setUpateProduct] = useState(false);
     const history = useHistory();
@@ -47,7 +47,9 @@ const SaveProduct = (props) => {
             } catch (err) {
                 console.log(err);
             }
-        } else { // create new product
+        } 
+        // create new product
+        else { 
             try {
                 const response = await axios.post(url + "/api/products", formData, { headers: { Authorization: `Bearer ${token}` } });
                 console.log(response);
@@ -74,6 +76,7 @@ const SaveProduct = (props) => {
                                 bestSeller: product.bestSeller,
                                 quantity: product.quantity,
                                 price: product.price,
+                                description: product.description,
                                 image: product.image,
                                 material: product.material
                             })
@@ -83,12 +86,13 @@ const SaveProduct = (props) => {
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Product type</Form.Label>
-                        <Form.Control value={product.productType} as="select" required onChange={e => {
+                        <Form.Control defaultValue={product.productType} as="select" required onChange={e => {
                             setProudct({
                                 productName: product.productName,
                                 productType: e.target.value,
                                 bestSeller: product.bestSeller,
                                 quantity: product.quantity,
+                                description: product.description,
                                 price: product.price,
                                 image: product.image,
                                 material: product.material
@@ -112,6 +116,7 @@ const SaveProduct = (props) => {
                                 bestSeller: product.bestSeller,
                                 quantity: e.target.value,
                                 price: product.price,
+                                description: product.description,
                                 image: product.image,
                                 material: product.material
                             })
@@ -122,13 +127,14 @@ const SaveProduct = (props) => {
 
                     <Form.Group controlId="exampleForm.ControlSelect1">
                         <Form.Label>Material</Form.Label>
-                        <Form.Control as="select" value={product.material} required onChange={e => {
+                        <Form.Control as="select" defaultValue={product.material} required onChange={e => {
                             setProudct({
                                 productName: product.productName,
                                 productType: product.productType,
                                 bestSeller: product.bestSeller,
                                 quantity: product.quantity,
                                 price: product.price,
+                                description: product.description,
                                 image: product.image,
                                 material: e.target.value
                             })
@@ -149,11 +155,28 @@ const SaveProduct = (props) => {
                                 bestSeller: product.bestSeller,
                                 quantity: product.quantity,
                                 price: e.target.value,
+                                description: product.description,
                                 image: product.image,
                                 material: product.material
                             })
                         }} />
                         {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
+                    </Form.Group>
+
+                    <Form.Group>
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control value={product.description} style={{resize: 'none'}} as="textarea" rows={2} onChange={e => {
+                            setProudct({
+                                productName: product.productName,
+                                productType: product.productType,
+                                bestSeller: product.bestSeller,
+                                quantity: product.quantity,
+                                price: product.price,
+                                description: e.target.value,
+                                image: product.image,
+                                material: product.material
+                            })
+                        }} />
                     </Form.Group>
 
                     <Form.Group>
@@ -165,6 +188,7 @@ const SaveProduct = (props) => {
                                 bestSeller: e.target.checked,
                                 quantity: product.quantity,
                                 price: product.price,
+                                description: product.description,
                                 image: product.image,
                                 material: product.material
                             })
@@ -180,11 +204,13 @@ const SaveProduct = (props) => {
                                 bestSeller: product.bestSeller,
                                 quantity: product.quantity,
                                 price: product.price,
+                                description: product.description,
                                 image: e.target.files[0],
                                 material: product.material
                             })
                         }} />
                     </Form.Group>
+
                     <br />
                     <div>
                         <Button variant="primary" type="submit"> Submit</Button>

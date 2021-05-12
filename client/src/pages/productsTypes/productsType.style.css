@@ -1,0 +1,14 @@
+.products-type-container {
+    display: flex;
+    justify-content: center;
+}
+
+.products-type-grid {
+    padding: 20px 0;
+    margin: 30px 50px 0;
+    display: inline-grid;
+    grid-gap: 30px;
+    justify-items: center;
+    grid-template-columns: repeat(4, auto);
+}
+

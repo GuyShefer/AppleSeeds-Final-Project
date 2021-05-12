@@ -43,6 +43,9 @@ const productSchema = new mongoose.Schema({
         default: 0,
         min: 0,
     },
+    description : {
+        type: String,
+    }
 });
 
 const Product = mongoose.model('Product', productSchema);

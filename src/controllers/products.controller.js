@@ -58,7 +58,7 @@ const getAllBestSellerProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller', 'productType', 'image', 'id'];
+    const allowUpdates = ['material', 'price', 'quantity', 'productName', 'bestSeller', 'productType', 'image', 'id', 'description'];
 
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
     if (!isValidOperation) {
@@ -69,6 +69,7 @@ const updateProduct = async (req, res) => {
     }
     try {
         let extractProduct = { productType, material, price, quantity, productName, bestSeller } = req.body;
+        delete extractProduct['image']
 
         const product = await Product.findByIdAndUpdate(req.body.id, extractProduct, { new: true, runValidators: true });
 
@@ -117,7 +118,7 @@ const getProductById = async (req, res) => {
             return res.status(404).send();
         }
         // res.set('Content-Type', 'image/png');
-        res.send(product); /// <><><><><><><><><><><> have to return all obj
+        res.send(product);
     } catch (err) {
         res.status(500).send(err);
     }

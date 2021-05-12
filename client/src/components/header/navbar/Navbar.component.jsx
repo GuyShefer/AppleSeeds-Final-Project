@@ -15,24 +15,32 @@ const Navbar = () => {
     const [userLoginDetails, setUserLoginDetails] = useState({ email: '', password: '' });
     const [userRegister, setUserRegister] = useState({ email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' });
     const [user, setUser] = useState({});
+    const [showUserDropDown, setShowUserDropDown] = useState(false);
 
-    const showDropdown = (e) => {
+    const showDropdown = () => {
         setShow(!show);
     }
-    const hideDropdown = e => {
-        setShow(false);
+    const hideDropdown = () => {
+        setShow(!show);
     }
     const handleClose = () => {
         setLoginModalShow(false);
         setRegisterModalShowModalShow(false);
     }
 
+    const handleShowUserDropDown = () => {
+        setShowUserDropDown(!showUserDropDown);
+    }
+
     const handleUserAccount = async () => {
+        console.log(user);
         const token = JSON.parse(localStorage.getItem('token'));
         if (token) {
             const response = await axios.get(url + '/api/users/getAccInfo', { headers: { Authorization: `Bearer ${token}` } })
             setUser(response.data);
+            console.log(response.data);
             /// notificate the user that the log in succsess
+
         } else {
             setLoginModalShow(true);
         }
@@ -92,10 +100,10 @@ const Navbar = () => {
                                 <Dropdown.Menu >
                                     <Dropdown.Item>Best Sellers</Dropdown.Item>
                                     <Link to="/products" className="dropdown-item" role="button">Shop All</Link>
-                                    <Link to={{ pathname: "/products/byType", productsType: 'earrings' }} className="dropdown-item" role="button">Earrings</Link>
-                                    <Link to={{ pathname: "/products/byType", productsType: 'rings' }} className="dropdown-item" role="button">Rings</Link>
-                                    <Link to={{ pathname: "/products/byType", productsType: 'necklaces' }} className="dropdown-item" role="button">Necklaces</Link>
-                                    <Link to={{ pathname: "/products/byType", productsType: 'bracelets' }} className="dropdown-item" role="button">Bracelets</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'earrings', userType: user.userType }} className="dropdown-item" role="button">Earrings</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'rings', userType: user.userType }} className="dropdown-item" role="button">Rings</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'necklaces', userType: user.userType }} className="dropdown-item" role="button">Necklaces</Link>
+                                    <Link to={{ pathname: "/products/byType", productsType: 'bracelets', userType: user.userType }} className="dropdown-item" role="button">Bracelets</Link>
                                 </Dropdown.Menu>
                             </Dropdown>
                         </li>
@@ -106,7 +114,17 @@ const Navbar = () => {
                 </div>
 
                 <div className="user-details">
-                    <div className="icon-detail" onClick={handleUserAccount}><i className="fas fa-user"></i></div>
+                    <Dropdown show={showUserDropDown && Object.keys(user).length > 0} menualign={{ lg: 'left' }} onMouseEnter={handleShowUserDropDown} onMouseLeave={handleShowUserDropDown}>
+                        {/* ############## */}
+                        <Dropdown.Toggle className="user-icon-dropdown" onClick={Object.keys(user).length === 0 ? handleUserAccount : null} ><i className="fas fa-user"></i> </Dropdown.Toggle>
+                        <Dropdown.Menu >
+                            <Dropdown.Item eventKey="1">My Account</Dropdown.Item>
+                            <Dropdown.Item eventKey="2">Purchases History</Dropdown.Item>
+                            <Dropdown.Item eventKey="3">Log Out</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+
+                    {/* <div className="icon-detail" onClick={handleUserAccount}><i className="fas fa-user"></i></div> */}
                     <div className="icon-detail"><i className="fas fa-shopping-bag"></i><span className="cart-amount">1</span></div>
                 </div>
             </div>
