@@ -107,14 +107,14 @@
     opacity: 0.9;
 }
 
-/*  */
+/* User Details */
 
 .user-details {
-    width: 120px;
-    margin-left: 100px;
+    width: 200px;
     text-align: center;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
 }
 
 .icon-detail {
@@ -126,6 +126,32 @@
     margin-left: 8px;
     line-height: 1.3px;
     font-weight: 800;
+}
+
+.user-details .show>.btn-primary.dropdown-toggle {
+    background: #fff;
+    color: #333;
+    font-size: 16px;
+    padding: 0;
+    height: 22px;
+}
+
+.user-details .dropdown-toggle::after {
+    display: none;
+}
+
+.user-details .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0rem rgb(49 132 253 / 50%);
+}
+
+.user-details .dropdown-menu.show {
+    inset: 30px auto auto 0px !important;
+    transform: none !important;
+}
+
+.user-details .dropdown-item {
+    font-size: 16px;
+    color: #000;
 }
 
 /* modal */

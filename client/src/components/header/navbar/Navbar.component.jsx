@@ -34,6 +34,7 @@ const Navbar = () => {
             setUser(response.data);
             console.log(response.data);
             /// notificate the user that the log in succsess
+
         } else {
             setLoginModalShow(true);
         }
@@ -107,7 +108,17 @@ const Navbar = () => {
                 </div>
 
                 <div className="user-details">
-                    <div className="icon-detail" onClick={handleUserAccount}><i className="fas fa-user"></i></div>
+                    <Dropdown show={true} menualign={{ lg: 'left' }}>
+
+                        <Dropdown.Toggle className="user-icon-dropdown" onClick={handleUserAccount} ><i className="fas fa-user"></i> </Dropdown.Toggle>
+                        <Dropdown.Menu >
+                            <Dropdown.Item eventKey="1">My Account</Dropdown.Item>
+                            <Dropdown.Item eventKey="2">Purchases History</Dropdown.Item>
+                            <Dropdown.Item eventKey="2">Log Out</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+
+                    {/* <div className="icon-detail" onClick={handleUserAccount}><i className="fas fa-user"></i></div> */}
                     <div className="icon-detail"><i className="fas fa-shopping-bag"></i><span className="cart-amount">1</span></div>
                 </div>
             </div>
