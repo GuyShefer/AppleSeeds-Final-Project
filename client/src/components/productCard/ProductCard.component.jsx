@@ -6,10 +6,12 @@ import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'semantic-ui-react';
 
+
 const ProductCard = (props) => {
 
     const [productDetails] = useState(props);
     const [showProductModal, setShowModal] = useState(false);
+    const [productToDisplay, setProduct] = useState({});
     const history = useHistory();
 
     const arrayBufferToBase64 = (buffer) => {
@@ -34,9 +36,10 @@ const ProductCard = (props) => {
     }
 
     const openProductModal = async () => {
-        setShowModal(!showProductModal);
         const response = await axios.patch(url + `/api/products/${productDetails.product._id}`);
         console.log(response.data);
+        setProduct(response.data);
+        setShowModal(!showProductModal);
     }
 
     const handleClose = () => {
@@ -68,15 +71,25 @@ const ProductCard = (props) => {
 
             <Modal show={showProductModal} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+                    <Modal.Title>{productToDisplay.productName}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </p>
+                <Modal.Body className="product-card-modal-body">
+                    <div className="image-side">
+                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.product.image.data)}`} alt="card product" />
+                    </div>
+                    <div className="right-side-modal">
+                        <h3 className="h3">{productToDisplay.productName}</h3>
+                        <div className="modal-price">
+                            <p>Price : &#8362;{productToDisplay.price}</p>
+                        </div>
+                        <div className="product-description">
+                            {productToDisplay.description}
+                        </div>
+                        <div className="add-tocart">
+                            <Button color='blue'>ADD TO CART</Button>
+                        </div>
+                    </div>
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleClose}>Close</Button>
