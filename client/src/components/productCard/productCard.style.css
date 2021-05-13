@@ -113,3 +113,40 @@
 .user-action-button:hover {
     opacity: 0.8;
 }
+
+.product-card-modal-body {
+    display: flex;
+}
+
+.right-side-modal {
+    width: 100%;
+    padding: 20px;
+}
+
+.right-side-modal .h3 {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #999;
+}
+
+.product-card-modal-body img {
+    width: 400px;
+    height: 400px;
+}
+
+.right-side-modal .modal-price {
+    text-align: center;
+    padding-top: 10px;
+    border-bottom: 1px solid #999;
+    font-size: 20px;
+    letter-spacing: 0.7px;
+}
+
+.product-description {
+    padding: 10px 0;
+    border-bottom: 1px solid #999;
+}
+
+.add-tocart {
+    text-align: center;
+    padding-top: 30px;
+}

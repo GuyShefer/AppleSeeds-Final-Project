@@ -6,10 +6,14 @@ import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'semantic-ui-react';
 
-const ProductCard = (props) => {
+import { connect } from 'react-redux';
+import { addToCart } from '../../redux/Shopping/shopping-actions';
 
-    const [productDetails] = useState(props);
+const ProductCard = ({ type, product, forceUpdate, addToCart }) => {
+
+    const [productDetails] = useState(product);
     const [showProductModal, setShowModal] = useState(false);
+    const [productToDisplay, setProduct] = useState({});
     const history = useHistory();
 
     const arrayBufferToBase64 = (buffer) => {
@@ -23,7 +27,7 @@ const ProductCard = (props) => {
         console.log('delete', productDetails.product._id);
         const token = JSON.parse(localStorage.getItem('token'));
         const res = await axios.delete(url + `/api/products/${productDetails.product._id}`, { headers: { Authorization: `Bearer ${token}` } });
-        props.forceUpdate(res.data._id);
+        forceUpdate(res.data._id);
     }
 
     const updateProduct = () => {
@@ -34,49 +38,67 @@ const ProductCard = (props) => {
     }
 
     const openProductModal = async () => {
-        setShowModal(!showProductModal);
-        const response = await axios.patch(url + `/api/products/${productDetails.product._id}`);
+        const response = await axios.patch(url + `/api/products/${productDetails._id}`);
         console.log(response.data);
+        setProduct(response.data);
+        setShowModal(!showProductModal);
     }
 
     const handleClose = () => {
         setShowModal(!showProductModal);
     }
 
+    const handleAddToCart = () => {
+        addToCart(productDetails);
+        handleClose();
+    }
+
     return (
         <>
+        {console.log(type)}
             <div className="card-wrapper">
 
                 <div className="product-card">
                     <div className="card-image">
                         <div className="product-card-header">
-                            <p className="product-title-name">{productDetails.product.productName}</p>
-                            <p className="product-price">{productDetails.product.price}$</p>
+                            <p className="product-title-name">{productDetails.productName}</p>
+                            <p className="product-price">{productDetails.price}$</p>
                         </div>
-                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.product.image.data)}`} alt="card product" />
+                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.image.data)}`} alt="card product" />
                         <div className="card-button" onClick={openProductModal}>QUICK VIEW</div>
                     </div>
                 </div>
 
-                {props.userType &&
+                {product.userType &&
                     <div className="user-actions">
                         <button className="user-action-button delete" onClick={deleteProduct}>Delete</button>
                         <button className="user-action-button update" onClick={updateProduct}>Update</button>
                     </div>
                 }
             </div>
+            
 
             <Modal show={showProductModal} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">Modal heading</Modal.Title>
+                    <Modal.Title>{productToDisplay.productName}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </p>
+                <Modal.Body className="product-card-modal-body">
+                    <div className="image-side">
+                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.image.data)}`} alt="card product" />
+                    </div>
+                    <div className="right-side-modal">
+                        <h3 className="h3">{productToDisplay.productName}</h3>
+                        <div className="modal-price">
+                            <p>Price : &#8362;{productToDisplay.price}</p>
+                        </div>
+                        <div className="product-description">
+                            {productToDisplay.description}
+                        </div>
+                        <div className="add-tocart">
+                            <Button color='blue' onClick={handleAddToCart}>ADD TO CART</Button> {/* redux */}
+                        </div>
+                    </div>
+
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleClose}>Close</Button>
@@ -86,4 +108,10 @@ const ProductCard = (props) => {
     )
 }
 
-export default ProductCard;
+const mapDispatchToProps = dispatch => {
+    return {
+        addToCart: (product) => dispatch(addToCart(product))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(ProductCard);

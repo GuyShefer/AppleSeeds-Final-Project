@@ -37,6 +37,7 @@ const SaveProduct = (props) => {
 
         if (updateProduct) {
             formData.append('id', props.history.location.productId);
+            console.log(product);
             try {
                 const response = await axios.put(url + `/api/products/updateProduct/byform`, formData, { headers: { Authorization: `Bearer ${token}` } });
                 console.log(response);
@@ -45,7 +46,7 @@ const SaveProduct = (props) => {
                     userType: { type: 'admin' },
                 });
             } catch (err) {
-                console.log(err);
+                console.log(err.response.data);
             }
         } 
         // create new product
