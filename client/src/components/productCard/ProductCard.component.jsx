@@ -6,10 +6,12 @@ import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'semantic-ui-react';
 
+import { connect } from 'react-redux';
+import { addToCart } from '../../redux/Shopping/shopping-actions';
 
-const ProductCard = (props) => {
+const ProductCard = ({ product, forceUpdate, addToCart }) => {
 
-    const [productDetails] = useState(props);
+    const [productDetails] = useState(product);
     const [showProductModal, setShowModal] = useState(false);
     const [productToDisplay, setProduct] = useState({});
     const history = useHistory();
@@ -25,7 +27,7 @@ const ProductCard = (props) => {
         console.log('delete', productDetails.product._id);
         const token = JSON.parse(localStorage.getItem('token'));
         const res = await axios.delete(url + `/api/products/${productDetails.product._id}`, { headers: { Authorization: `Bearer ${token}` } });
-        props.forceUpdate(res.data._id);
+        forceUpdate(res.data._id);
     }
 
     const updateProduct = () => {
@@ -36,7 +38,7 @@ const ProductCard = (props) => {
     }
 
     const openProductModal = async () => {
-        const response = await axios.patch(url + `/api/products/${productDetails.product._id}`);
+        const response = await axios.patch(url + `/api/products/${productDetails._id}`);
         console.log(response.data);
         setProduct(response.data);
         setShowModal(!showProductModal);
@@ -53,15 +55,15 @@ const ProductCard = (props) => {
                 <div className="product-card">
                     <div className="card-image">
                         <div className="product-card-header">
-                            <p className="product-title-name">{productDetails.product.productName}</p>
-                            <p className="product-price">{productDetails.product.price}$</p>
+                            <p className="product-title-name">{productDetails.productName}</p>
+                            <p className="product-price">{productDetails.price}$</p>
                         </div>
-                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.product.image.data)}`} alt="card product" />
+                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.image.data)}`} alt="card product" />
                         <div className="card-button" onClick={openProductModal}>QUICK VIEW</div>
                     </div>
                 </div>
 
-                {props.userType &&
+                {product.userType &&
                     <div className="user-actions">
                         <button className="user-action-button delete" onClick={deleteProduct}>Delete</button>
                         <button className="user-action-button update" onClick={updateProduct}>Update</button>
@@ -75,7 +77,7 @@ const ProductCard = (props) => {
                 </Modal.Header>
                 <Modal.Body className="product-card-modal-body">
                     <div className="image-side">
-                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.product.image.data)}`} alt="card product" />
+                        <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.image.data)}`} alt="card product" />
                     </div>
                     <div className="right-side-modal">
                         <h3 className="h3">{productToDisplay.productName}</h3>
@@ -86,7 +88,7 @@ const ProductCard = (props) => {
                             {productToDisplay.description}
                         </div>
                         <div className="add-tocart">
-                            <Button color='blue'>ADD TO CART</Button>
+                            <Button color='blue' onClick={() => addToCart(productDetails)}>ADD TO CART</Button> {/* redux */}
                         </div>
                     </div>
 
@@ -99,4 +101,10 @@ const ProductCard = (props) => {
     )
 }
 
-export default ProductCard;
+const mapDispatchToProps = dispatch => {
+    return {
+        addToCart: (product) => dispatch(addToCart(product))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(ProductCard);

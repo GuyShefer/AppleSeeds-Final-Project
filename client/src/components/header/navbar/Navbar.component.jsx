@@ -98,7 +98,6 @@ const Navbar = () => {
                                 onMouseLeave={hideDropdown}>
                                 <Dropdown.Toggle className="nav-item" > SHOP </Dropdown.Toggle>
                                 <Dropdown.Menu >
-                                    <Dropdown.Item>Best Sellers</Dropdown.Item>
                                     <Link to="/products" className="dropdown-item" role="button">Shop All</Link>
                                     <Link to={{ pathname: "/products/byType", productsType: 'earrings', userType: user.userType }} className="dropdown-item" role="button">Earrings</Link>
                                     <Link to={{ pathname: "/products/byType", productsType: 'rings', userType: user.userType }} className="dropdown-item" role="button">Rings</Link>
