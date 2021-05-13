@@ -48,6 +48,11 @@ const ProductCard = ({ product, forceUpdate, addToCart }) => {
         setShowModal(!showProductModal);
     }
 
+    const handleAddToCart = () => {
+        addToCart(productDetails);
+        handleClose();
+    }
+
     return (
         <>
             <div className="card-wrapper">
@@ -88,7 +93,7 @@ const ProductCard = ({ product, forceUpdate, addToCart }) => {
                             {productToDisplay.description}
                         </div>
                         <div className="add-tocart">
-                            <Button color='blue' onClick={() => addToCart(productDetails)}>ADD TO CART</Button> {/* redux */}
+                            <Button color='blue' onClick={handleAddToCart}>ADD TO CART</Button> {/* redux */}
                         </div>
                     </div>
 

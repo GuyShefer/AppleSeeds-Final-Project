@@ -36,3 +36,8 @@
     display: flex;
     border: 0.1px solid lightgray;
 }
+
+.update-span {
+    background: #e2e2e2;
+    cursor: pointer;
+}

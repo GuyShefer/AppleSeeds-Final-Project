@@ -1,7 +1,7 @@
 import * as actionTypes from './shopping-types';
 
 const INITIAL_STATE = {
-    products: [], // {id, productName, description, price, image} //  not need
+    // products: [], // {id, productName, description, price, image} //  not need
     cart: [], // {id, productName, description, price, image, + qty}
     currentItem: null,
 }
@@ -25,7 +25,7 @@ const shopReducer = (state = INITIAL_STATE, action) => {
         case actionTypes.ADJUST_QTY:
             return {
                 ...state,
-                cart: state.cart.map(item => item._id === action.payload._id ? { ...item, qty: action.payload.qty } : item),
+                cart: state.cart.map(item => item._id === action.payload.id ? { ...item, qty: +action.payload.qty } : item),
             }
         case actionTypes.LOAD_CURRENT_ITEM:
             return {

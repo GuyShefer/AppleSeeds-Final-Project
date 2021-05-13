@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './cartItem.style.css';
 
-const CartItem = ({ productData }) => {
+import { connect } from 'react-redux';
+import { adjustQty } from '../../redux/Shopping/shopping-actions';
+
+const CartItem = ({ productData, adjustQty }) => {
+    const [productQty, setProductQty] = useState(productData.qty);
+
+    const handleDecrease = () => {
+        if (productQty > 0) {
+            setProductQty(productQty - 1);
+            adjustQty(productData._id, productQty - 1);
+        }
+    }
+    const handleIncrease = () => {
+        setProductQty(productQty + 1);
+        adjustQty(productData._id, productQty + 1);
+    }
 
     return (
         <>
-            {console.log(productData)}
             <div className="cart-item">
                 <div className="cart-image-container">
                     <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productData.image.data)}`} alt="card product" />
@@ -14,9 +28,9 @@ const CartItem = ({ productData }) => {
                     <h3>{productData.productName}</h3>
                     <h4>&#8362;{productData.price} NIS</h4>
                     <div className="qty-update">
-                        <span>-</span>
-                        <span>{productData.qty}</span>
-                        <span>+</span>
+                        <span className="update-span" onClick={handleDecrease} >-</span>
+                        <span>{productQty}</span>
+                        <span className="update-span" onClick={handleIncrease}>+</span>
                     </div>
                 </div>
             </div>
@@ -30,6 +44,12 @@ const arrayBufferToBase64 = (buffer) => {
     let bytes = [].slice.call(new Uint8Array(buffer));
     bytes.forEach((b) => binary += String.fromCharCode(b));
     return window.btoa(binary);
-}
+};
 
-export default CartItem;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        adjustQty: (id, value) => dispatch(adjustQty(id, value))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(CartItem);
