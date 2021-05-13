@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './cartItem.style.css';
 
 import { connect } from 'react-redux';
-import { adjustQty } from '../../redux/Shopping/shopping-actions';
+import { adjustQty, removeFromCart } from '../../redux/Shopping/shopping-actions';
 
-const CartItem = ({ productData, adjustQty }) => {
+const CartItem = ({ productData, adjustQty, removeFromCart }) => {
     const [productQty, setProductQty] = useState(productData.qty);
+
+    useEffect(() => {
+        if(productQty === 0){
+            console.log('product qty = 0');
+            removeFromCart(productData._id)
+        }
+    }, [productQty, removeFromCart, productData._id])
 
     const handleDecrease = () => {
         if (productQty > 0) {
@@ -48,7 +55,8 @@ const arrayBufferToBase64 = (buffer) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        adjustQty: (id, value) => dispatch(adjustQty(id, value))
+        adjustQty: (id, value) => dispatch(adjustQty(id, value)),
+        removeFromCart: (id) => dispatch(removeFromCart(id)),
     };
 };
 

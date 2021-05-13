@@ -9,7 +9,7 @@ import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addToCart } from '../../redux/Shopping/shopping-actions';
 
-const ProductCard = ({ product, forceUpdate, addToCart }) => {
+const ProductCard = ({ type, product, forceUpdate, addToCart }) => {
 
     const [productDetails] = useState(product);
     const [showProductModal, setShowModal] = useState(false);
@@ -55,6 +55,7 @@ const ProductCard = ({ product, forceUpdate, addToCart }) => {
 
     return (
         <>
+        {console.log(type)}
             <div className="card-wrapper">
 
                 <div className="product-card">
@@ -75,6 +76,7 @@ const ProductCard = ({ product, forceUpdate, addToCart }) => {
                     </div>
                 }
             </div>
+            
 
             <Modal show={showProductModal} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>

@@ -1,11 +1,11 @@
 
 import * as actionTypes from './shopping-types';
 
-export const addToCart = (itemId) => {
+export const addToCart = (product) => {
     return {
         type: actionTypes.ADD_TO_CART,
         payload: {
-            product: itemId
+            product: product
         },
     };
 };
@@ -26,12 +26,5 @@ export const adjustQty = (itemId, value) => {
             id: itemId,
             qty: value,
         },
-    };
-};
-
-export const loadCurrentItem = (item) => {
-    return {
-        type: actionTypes.LOAD_CURRENT_ITEM,
-        payload: item
     };
 };

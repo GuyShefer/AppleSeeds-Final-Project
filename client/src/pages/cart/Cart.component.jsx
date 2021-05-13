@@ -43,8 +43,6 @@ const Cart = ({ cart }) => {
                     </div>
                 </div>
             </div>
-
-            {console.log(cart)}
         </>
     )
 }
