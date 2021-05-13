@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './navbar.style.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Modal from 'react-bootstrap/Modal';
@@ -7,7 +7,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import url from '../../../utilities/serverURL';
 
-const Navbar = () => {
+import { connect } from 'react-redux';
+
+
+const Navbar = ({ cart }) => {
 
     const [show, setShow] = useState(false);
     const [loginModalShow, setLoginModalShow] = useState(false);
@@ -16,6 +19,15 @@ const Navbar = () => {
     const [userRegister, setUserRegister] = useState({ email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' });
     const [user, setUser] = useState({});
     const [showUserDropDown, setShowUserDropDown] = useState(false);
+    const [cartCounter, setCartCounter] = useState(0);
+
+    useEffect(() => {
+        let count = 0;
+        cart.forEach(item => {
+            count += item.qty;
+        });
+        setCartCounter(count);
+    }, [cart, cartCounter])
 
     const showDropdown = () => {
         setShow(!show);
@@ -123,8 +135,8 @@ const Navbar = () => {
                         </Dropdown.Menu>
                     </Dropdown>
 
-                    {/* <div className="icon-detail" onClick={handleUserAccount}><i className="fas fa-user"></i></div> */}
-                    <div className="icon-detail"><i className="fas fa-shopping-bag"></i><span className="cart-amount">1</span></div>
+
+                    <div className="icon-detail"><Link to="/cart"><i className="fas fa-shopping-bag"></i><span className="cart-amount">{cartCounter}</span></Link></div>
                 </div>
             </div>
 
@@ -227,4 +239,10 @@ const Navbar = () => {
     )
 }
 
-export default Navbar;
+const mapStateToProps = state => {
+    return {
+        cart: state.shop.cart,
+    }
+}
+
+export default connect(mapStateToProps)(Navbar);

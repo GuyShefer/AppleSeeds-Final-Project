@@ -1,7 +1,7 @@
 import * as actionTypes from './shopping-types';
 
 const INITIAL_STATE = {
-    products: [], // {id, productName, description, price, image}
+    products: [], // {id, productName, description, price, image} //  not need
     cart: [], // {id, productName, description, price, image, + qty}
     currentItem: null,
 }
@@ -12,10 +12,10 @@ const shopReducer = (state = INITIAL_STATE, action) => {
 
             const item = action.payload.product;
             // check if item is in cart already
-            const inCart = state.cart.find(item => item.id === action.payload.product.id ? true : false);
+            const inCart = state.cart.find(item => item._id === action.payload.product._id ? true : false);
             return {
                 ...state,
-                cart: inCart ? state.cart.map(item => item.id === action.payload.product.id ? { ...item, qty: item.qty + 1 } : item) : [...state.cart, { ...item, qty: 1 }],
+                cart: inCart ? state.cart.map(item => item._id === action.payload.product._id ? { ...item, qty: item.qty + 1 } : item) : [...state.cart, { ...item, qty: 1 }],
             }
         case actionTypes.REMOVE_FROM_CART:
             return {

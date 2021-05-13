@@ -190,3 +190,8 @@
     color: rgb(170, 143, 20);
     background-color: #fff;
 }
+
+.icon-detail a, .icon-detail a:hover{
+    color: #333
+}
+
