@@ -45,7 +45,6 @@ const Admin = (props) => {
                     {/*  */}
                     {componentSwitch(componenetToDisplay)}
                 </div>
-
                 : null}
         </>
     )

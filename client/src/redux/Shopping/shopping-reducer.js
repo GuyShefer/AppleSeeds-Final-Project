@@ -1,9 +1,7 @@
 import * as actionTypes from './shopping-types';
 
 const INITIAL_STATE = {
-    // products: [], // {id, productName, description, price, image} //  not need
     cart: [],
-    // currentItem: null,
 }
 
 const shopReducer = (state = INITIAL_STATE, action) => {
@@ -26,6 +24,8 @@ const shopReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cart: state.cart.map(item => item._id === action.payload.id ? { ...item, qty: +action.payload.qty } : item),
             }
+        case actionTypes.CLEAR_STATE:
+            return INITIAL_STATE;
         default:
             return state;
     }

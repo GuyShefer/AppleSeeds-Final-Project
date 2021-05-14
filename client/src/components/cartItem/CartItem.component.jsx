@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './cartItem.style.css';
-
 import { connect } from 'react-redux';
 import { adjustQty, removeFromCart } from '../../redux/Shopping/shopping-actions';
+
 
 const CartItem = ({ productData, adjustQty, removeFromCart }) => {
     const [productQty, setProductQty] = useState(productData.qty);
 
     useEffect(() => {
-        if(productQty === 0){
-            console.log('product qty = 0');
+        if (productQty === 0) {
             removeFromCart(productData._id)
         }
     }, [productQty, removeFromCart, productData._id])
@@ -43,7 +42,6 @@ const CartItem = ({ productData, adjustQty, removeFromCart }) => {
             </div>
         </>
     )
-
 }
 
 const arrayBufferToBase64 = (buffer) => {
