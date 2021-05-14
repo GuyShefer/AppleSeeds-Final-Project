@@ -31,8 +31,6 @@ const AllProducts = (props) => {
 
     return (
         <>
-            {console.log(products)}
-            {console.log(userType)}
             <div className="all-products-container">
                 <div className="horizontal-line">
                     <hr />
