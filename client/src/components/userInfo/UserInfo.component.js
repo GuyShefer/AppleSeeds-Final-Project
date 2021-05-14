@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './userInfo.style.css';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'semantic-ui-react';
@@ -9,6 +9,14 @@ import url from '../../utilities/serverURL';
 const UserInfo = (props) => {
 
     const [userData, setUserData] = useState(props.user);
+
+    useEffect(() => {
+        if (props.user) {
+            setUserData(props.user)
+        } else {
+            return <div>404</div>
+        }
+    }, [props.user,setUserData])
 
     const updateUser = async (e) => {
         e.preventDefault();
