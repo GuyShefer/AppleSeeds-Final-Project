@@ -5,11 +5,10 @@ import url from '../../utilities/serverURL';
 import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import { Button } from 'semantic-ui-react';
-
 import { connect } from 'react-redux';
 import { addToCart } from '../../redux/Shopping/shopping-actions';
 
-const ProductCard = ({ type, product, forceUpdate, addToCart }) => {
+const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
 
     const [productDetails] = useState(product);
     const [showProductModal, setShowModal] = useState(false);
@@ -55,7 +54,6 @@ const ProductCard = ({ type, product, forceUpdate, addToCart }) => {
 
     return (
         <>
-        {console.log(type)}
             <div className="card-wrapper">
 
                 <div className="product-card">
@@ -69,7 +67,7 @@ const ProductCard = ({ type, product, forceUpdate, addToCart }) => {
                     </div>
                 </div>
 
-                {product.userType &&
+                {userType &&
                     <div className="user-actions">
                         <button className="user-action-button delete" onClick={deleteProduct}>Delete</button>
                         <button className="user-action-button update" onClick={updateProduct}>Update</button>
@@ -77,7 +75,6 @@ const ProductCard = ({ type, product, forceUpdate, addToCart }) => {
                 }
             </div>
             
-
             <Modal show={showProductModal} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>{productToDisplay.productName}</Modal.Title>

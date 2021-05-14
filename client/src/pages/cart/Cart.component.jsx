@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './cart.style.css';
 import { connect } from 'react-redux';
+import { clearState } from '../../redux/Shopping/shopping-actions';
 import { Button } from 'semantic-ui-react';
 import CartItem from '../../components/cartItem/CartItem.component';
+import axios from 'axios';
+import url from '../../utilities/serverURL';
+import { useHistory } from 'react-router-dom';
 
-const Cart = ({ cart }) => {
+const Cart = ({ cart, clearState }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
+    const history = useHistory();
 
     useEffect(() => {
         let items = 0;
@@ -22,6 +27,25 @@ const Cart = ({ cart }) => {
 
     }, [cart, totalPrice, totalItems, setTotalPrice, setTotalItems])
 
+    const purchaseProducts = async () => {
+        const token = JSON.parse(localStorage.getItem('token'));
+
+        const pruchaseCart = cart.map(product => {
+            return {
+                productId: product._id,
+                amount: product.qty,
+            }
+        })
+        const purchaseBody = { products: pruchaseCart, totalPrice };
+        try {
+            await axios.put(url + '/api/purchases', purchaseBody, { headers: { Authorization: `Bearer ${token}` } });
+            history.push("/");
+            clearState();
+            //message the client for success
+        } catch (err) {
+            console.log(err.response.data);
+        }
+    }
 
 
     return (
@@ -34,12 +58,11 @@ const Cart = ({ cart }) => {
                     <div className="cart-left">
                         {cart.map(product => {
                             return <CartItem key={product._id} productData={product} />
-                            // return <p key={product._id}>{product.productName}</p>
                         })}
                     </div>
                     <div className="cart-right">
                         <h3>Total : <span className="total-span">({totalItems} items)</span> &#8362;{totalPrice}</h3>
-                        <Button color="blue">CHECKOUT</Button>
+                        <Button color="blue" onClick={purchaseProducts}>CHECKOUT</Button>
                     </div>
                 </div>
             </div>
@@ -48,11 +71,16 @@ const Cart = ({ cart }) => {
 }
 
 
-
 const mapStateToProps = state => {
     return {
         cart: state.shop.cart
     }
 }
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = dispatch => {
+    return {
+        clearState: () => dispatch(clearState()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

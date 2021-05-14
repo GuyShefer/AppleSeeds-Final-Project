@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import url from '../../../utilities/serverURL';
-
 import { connect } from 'react-redux';
 
 
@@ -129,6 +128,7 @@ const Navbar = ({ cart }) => {
                         {/* ############## */}
                         <Dropdown.Toggle className="user-icon-dropdown" onClick={Object.keys(user).length === 0 ? handleUserAccount : null} ><i className="fas fa-user"></i> </Dropdown.Toggle>
                         <Dropdown.Menu >
+                        <Link to="/myAccount" className="dropdown-item" role="button">My Account</Link>
                             <Dropdown.Item eventKey="1">My Account</Dropdown.Item>
                             <Dropdown.Item eventKey="2">Purchases History</Dropdown.Item>
                             <Dropdown.Item eventKey="3">Log Out</Dropdown.Item>
