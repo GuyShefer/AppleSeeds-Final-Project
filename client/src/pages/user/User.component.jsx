@@ -5,7 +5,7 @@ const User = () =>{
 
     return(
         <>
-            user dtails
+            user dtails asd
         </>
     )
 }
