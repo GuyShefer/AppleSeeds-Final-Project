@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         trim: true,
-        lowercase: true,
         required: true,
         minLength: 2,
         validate(value) {
@@ -37,7 +36,6 @@ const userSchema = new mongoose.Schema({
     lastName: {
         type: String,
         trim: true,
-        lowercase: true,
         required: true,
         minLength: 2,
         validate(value) {

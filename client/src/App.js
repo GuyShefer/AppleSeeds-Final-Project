@@ -11,6 +11,7 @@ import AllProducts from './pages/allProducts/AllProducts.component';
 import SaveProduct from './components/saveProduct/SaveProduct.component';
 import ProductsType from './pages/productsTypes/ProductsType.component';
 import Cart from './pages/cart/Cart.component';
+import User from './pages/user/User.component';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route exact path='/' component={Main} />
           <Route exact path='/cart' component={Cart} />
           <Route exact path='/admin' component={Admin} />
+          <Route exact path='/myAccount' component={User} />
           <Route exact path='/products' component={AllProducts} />
           <Route exact path='/saveProduct' component={SaveProduct} />
           <Route exact path='/products/byType' component={ProductsType} />

@@ -128,9 +128,8 @@ const Navbar = ({ cart }) => {
                         {/* ############## */}
                         <Dropdown.Toggle className="user-icon-dropdown" onClick={Object.keys(user).length === 0 ? handleUserAccount : null} ><i className="fas fa-user"></i> </Dropdown.Toggle>
                         <Dropdown.Menu >
-                        <Link to="/myAccount" className="dropdown-item" role="button">My Account</Link>
-                            <Dropdown.Item eventKey="1">My Account</Dropdown.Item>
-                            <Dropdown.Item eventKey="2">Purchases History</Dropdown.Item>
+                            <Link to={{ pathname: "/myAccount", userDetails: user, display: 'usersAccount' }} className="dropdown-item" role="button">My Account</Link>
+                            <Link to={{ pathname: "/myAccount", userDetails: user, display: 'userHistory' }} className="dropdown-item" role="button">Purchases History</Link>
                             <Dropdown.Item eventKey="3">Log Out</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
