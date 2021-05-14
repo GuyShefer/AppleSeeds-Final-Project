@@ -87,6 +87,8 @@ const UserInfo = (props) => {
                         <Button variant="primary" type="submit">Update</Button>
                     </div>
                 </Form>
+
+                <div className="account-data-img"></div>
             </div>
         </>
     )

@@ -3,7 +3,7 @@
     width: 100%;
     border-bottom: 1px solid #999;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .user-info-form .form-group {
@@ -13,4 +13,9 @@
 .user-info-form .btn-submit {
     text-align: center;
     margin-top: 20px;
+}
+
+.account-data-img {
+    width: 30%;
+    background: url('../../images/model-2.jpg') no-repeat center center/cover;
 }
