@@ -11,6 +11,7 @@ const SaveProduct = (props) => {
     const [product, setProduct] = useState(initProductState);
     const [updateProduct, setUpateProduct] = useState(false);
     const history = useHistory();
+    const [userType] = useState(props.userType || props.location.userType);
 
     useEffect(() => {
 
@@ -20,12 +21,12 @@ const SaveProduct = (props) => {
             setUpateProduct(true);
         }
 
-        if (props.history) {
+        if (userType && props.history) {
             const id = props.history.location.productId;
             getProductById(id);
         }
 
-    }, [props.history])
+    }, [userType, props.history])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -65,87 +66,89 @@ const SaveProduct = (props) => {
 
     return (
         <>
-            <div className="product-save">
-                <Form onSubmit={handleSubmit}>
+            {userType ?
+                <div className="product-save">
+                    <Form onSubmit={handleSubmit}>
 
-                    <Form.Group>
-                        <Form.Label>Product Name</Form.Label>
-                        <Form.Control type="text" placeholder="Name" value={product.productName} required onChange={(e) => {
-                            return setProduct({ ...product, productName: e.target.value })
-                        }} />
-                        {/* <Form.Text className="text-muted"> We'll never share your email with anyone else.</Form.Text> */}
-                    </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Product Name</Form.Label>
+                            <Form.Control type="text" placeholder="Name" value={product.productName} required onChange={(e) => {
+                                return setProduct({ ...product, productName: e.target.value })
+                            }} />
+                            {/* <Form.Text className="text-muted"> We'll never share your email with anyone else.</Form.Text> */}
+                        </Form.Group>
 
-                    <Form.Group controlId="exampleForm.ControlSelect1">
-                        <Form.Label>Product type</Form.Label>
-                        <Form.Control defaultValue={product.productType} as="select" required onChange={e => {
-                            return setProduct({ ...product, productType: e.target.value })
-                        }}>
-                            <option value="earrings">earrings</option>
-                            <option value="rings">ring</option>
-                            <option value="necklaces">necklace</option>
-                            <option value="bracelets">bracelet</option>
-                            <option value="piercings">piercings</option>
-                            <option value="macrame">macrame</option>
-                        </Form.Control>
-                    </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>Product type</Form.Label>
+                            <Form.Control defaultValue={product.productType} as="select" required onChange={e => {
+                                return setProduct({ ...product, productType: e.target.value })
+                            }}>
+                                <option value="earrings">earrings</option>
+                                <option value="rings">ring</option>
+                                <option value="necklaces">necklace</option>
+                                <option value="bracelets">bracelet</option>
+                                <option value="piercings">piercings</option>
+                                <option value="macrame">macrame</option>
+                            </Form.Control>
+                        </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Amount</Form.Label>
-                        <Form.Control type="number" min="0" placeholder="Amount" value={product.quantity} required onChange={e => {
-                            return setProduct({ ...product, quantity: e.target.value })
-                        }} />
-                        {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
-                    </Form.Group>
-
-
-                    <Form.Group controlId="exampleForm.ControlSelect1">
-                        <Form.Label>Material</Form.Label>
-                        <Form.Control as="select" defaultValue={product.material} required onChange={e => {
-                            return setProduct({ ...product, material: e.target.value })
-                        }}>
-                            <option value="silver">silver</option>
-                            <option value="pure brass">pure brass</option>
-                            <option value="sterling silver">sterling silver</option>
-                        </Form.Control>
-                    </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Amount</Form.Label>
+                            <Form.Control type="number" min="0" placeholder="Amount" value={product.quantity} required onChange={e => {
+                                return setProduct({ ...product, quantity: e.target.value })
+                            }} />
+                            {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
+                        </Form.Group>
 
 
-                    <Form.Group>
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control type="number" min="0" placeholder="Price" value={product.price} required onChange={e => {
-                            return setProduct({ ...product, price: e.target.value })
-                        }} />
-                        {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
-                    </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>Material</Form.Label>
+                            <Form.Control as="select" defaultValue={product.material} required onChange={e => {
+                                return setProduct({ ...product, material: e.target.value })
+                            }}>
+                                <option value="silver">silver</option>
+                                <option value="pure brass">pure brass</option>
+                                <option value="sterling silver">sterling silver</option>
+                            </Form.Control>
+                        </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control value={product.description} style={{ resize: 'none' }} as="textarea" rows={2} onChange={e => {
-                            return setProduct({ ...product, description: e.target.value })
-                        }} />
-                    </Form.Group>
 
-                    <Form.Group>
-                        {/* <Form.Label>Best seller</Form.Label> */}
-                        <Form.Check type="checkbox" label="Best seller" value={product.bestSeller} onChange={e => {
-                            return setProduct({ ...product, bestSeller: e.target.checked })
-                        }} />
-                    </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Price</Form.Label>
+                            <Form.Control type="number" min="0" placeholder="Price" value={product.price} required onChange={e => {
+                                return setProduct({ ...product, price: e.target.value })
+                            }} />
+                            {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
+                        </Form.Group>
 
-                    <Form.Group>
-                        <Form.Label>Image</Form.Label>
-                        <Form.File onChange={e => {
-                            return setProduct({ ...product, image: e.target.files[0] })
-                        }} />
-                    </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control value={product.description} style={{ resize: 'none' }} as="textarea" rows={2} onChange={e => {
+                                return setProduct({ ...product, description: e.target.value })
+                            }} />
+                        </Form.Group>
 
-                    <br />
-                    <div>
-                        <Button variant="primary" type="submit"> Submit</Button>
-                    </div>
-                </Form>
-            </div>
+                        <Form.Group>
+                            {/* <Form.Label>Best seller</Form.Label> */}
+                            <Form.Check type="checkbox" label="Best seller" value={product.bestSeller} onChange={e => {
+                                return setProduct({ ...product, bestSeller: e.target.checked })
+                            }} />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Image</Form.Label>
+                            <Form.File onChange={e => {
+                                return setProduct({ ...product, image: e.target.files[0] })
+                            }} />
+                        </Form.Group>
+
+                        <br />
+                        <div>
+                            <Button variant="primary" type="submit"> Submit</Button>
+                        </div>
+                    </Form>
+                </div>
+                : history.push("/404")}
         </>
     )
 }

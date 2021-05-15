@@ -23,16 +23,20 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
     }
 
     const deleteProduct = async () => {
-        console.log('delete', productDetails.product._id);
         const token = JSON.parse(localStorage.getItem('token'));
-        const res = await axios.delete(url + `/api/products/${productDetails.product._id}`, { headers: { Authorization: `Bearer ${token}` } });
-        forceUpdate(res.data._id);
+        try {
+            const res = await axios.delete(url + `/api/products/${productDetails._id}`, { headers: { Authorization: `Bearer ${token}` } });
+            forceUpdate(res.data._id);
+        } catch (err) {
+            console.log(err.response.data);
+        }
     }
 
     const updateProduct = () => {
         history.push({
             pathname: `/saveProduct`,
             productId: productDetails._id,
+            userType: 'admin',
         });
     }
 
@@ -74,7 +78,7 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
                     </div>
                 }
             </div>
-            
+
             <Modal show={showProductModal} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>{productToDisplay.productName}</Modal.Title>
