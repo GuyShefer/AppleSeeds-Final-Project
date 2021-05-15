@@ -45,7 +45,6 @@ const Navbar = ({ cart }) => {
     }
 
     const handleUserAccount = async () => {
-        console.log(user);
         const token = JSON.parse(localStorage.getItem('token'));
         if (token) {
             const response = await axios.get(url + '/api/users/getAccInfo', { headers: { Authorization: `Bearer ${token}` } })

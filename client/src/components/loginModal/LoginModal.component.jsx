@@ -15,9 +15,6 @@ const LoginModal = ({ show, close, swapModal, setUser }) => {
         try {
             const response = await axios.post(url + '/api/users/login', userLoginDetails);
             localStorage.setItem('token', JSON.stringify(await response.data.token));
-            // setToken(response.data.token);
-            console.log(response.data);
-            console.log(response.data.token);
             setUser(response.data.user[0])
             close();
         } catch (err) {
