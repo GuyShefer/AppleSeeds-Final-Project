@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import url from '../../../utilities/serverURL';
 import { connect } from 'react-redux';
+import LogoutModal from '../../logoutModal/LogoutModal.component';
 
 
 const Navbar = ({ cart }) => {
@@ -19,6 +20,7 @@ const Navbar = ({ cart }) => {
     const [user, setUser] = useState({});
     const [showUserDropDown, setShowUserDropDown] = useState(false);
     const [cartCounter, setCartCounter] = useState(0);
+    const [logoutModal, setLogoutModal] = useState(false);
 
     useEffect(() => {
         let count = 0;
@@ -96,6 +98,15 @@ const Navbar = ({ cart }) => {
         setLoginModalShow(true);
     }
 
+    // logout modal handle
+    const handleLogoutModal = () => {
+        setLogoutModal(!logoutModal);
+    }
+
+    const clearUserState = () => {
+        setUser({});
+    }
+
     return (
         <>
             <div className="nav-bar">
@@ -125,12 +136,11 @@ const Navbar = ({ cart }) => {
 
                 <div className="user-details">
                     <Dropdown show={showUserDropDown && Object.keys(user).length > 0} menualign={{ lg: 'left' }} onMouseEnter={handleShowUserDropDown} onMouseLeave={handleShowUserDropDown}>
-                        {/* ############## */}
                         <Dropdown.Toggle className="user-icon-dropdown" onClick={Object.keys(user).length === 0 ? handleUserAccount : null} ><i className="fas fa-user"></i> </Dropdown.Toggle>
                         <Dropdown.Menu >
                             <Link to={{ pathname: "/myAccount", userDetails: user, display: 'usersAccount' }} className="dropdown-item" role="button">My Account</Link>
                             <Link to={{ pathname: "/myAccount", userDetails: user, display: 'userHistory' }} className="dropdown-item" role="button">Purchases History</Link>
-                            <Dropdown.Item eventKey="3">Log Out</Dropdown.Item>
+                            <Dropdown.Item onClick={handleLogoutModal}>Log Out</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
 
@@ -234,6 +244,8 @@ const Navbar = ({ cart }) => {
                     <p className="register-q">Already have an account? <span className="sing-up-btn" onClick={swapToLoginModal}> Log in</span></p>
                 </Modal.Footer>
             </Modal>
+
+            <LogoutModal show={logoutModal} close={handleLogoutModal} clearUserState={clearUserState} />
         </>
     )
 }

@@ -1,6 +1,5 @@
  .users-table{
     text-align: center;
-    overflow: scroll;
     overflow-x: hidden;
     height: 510px;
  }
