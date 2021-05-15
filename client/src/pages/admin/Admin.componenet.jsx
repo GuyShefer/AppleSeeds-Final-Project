@@ -42,8 +42,8 @@ const Admin = (props) => {
                             <li><Link to={{ pathname: "/products", userType: { type: `${userType}` } }}><span> All Products</span></Link></li>
                         </ul>
                     </div>
-                    {/*  */}
-                    {componentSwitch(componenetToDisplay)}
+
+                    {componentSwitch(componenetToDisplay)};
                 </div>
                 : null}
         </>

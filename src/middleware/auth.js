@@ -3,6 +3,7 @@ const User = require('../models/user.model');
 require('dotenv').config();
 
 const auth = async (req, res, next) => {
+    
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
         const userDecoded = jwt.verify(token, process.env.TOKEN_SECURITY);

@@ -1,0 +1,33 @@
+.user-details-main {
+    margin: 20px 100px 0;
+    font-family: 'Assistant', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-user {
+    border-top: 1px solid #999;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.user-nav-list {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0 20px;
+    
+}
+
+.user-nav-list li {
+    margin: 0 20px;
+    font-size: 20px;
+    color: #212529;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.user-nav-list li:hover {
+    color: royalblue;
+}
