@@ -32,7 +32,7 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
     const updateProduct = () => {
         history.push({
             pathname: `/saveProduct`,
-            productId: productDetails.product._id,
+            productId: productDetails._id,
         });
     }
 
