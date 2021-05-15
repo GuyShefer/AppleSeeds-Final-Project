@@ -1,0 +1,19 @@
+.user-purchase-history {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 40px 0;
+    border-bottom: 1px solid #999;
+}
+
+.user-history-table {
+    width: 40%;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.account-history-img {
+    width: 30%;
+    height: 50vh;
+    background: url('../../images/model-3.jpg') no-repeat center center/cover;
+}

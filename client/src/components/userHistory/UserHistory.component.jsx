@@ -22,43 +22,42 @@ const UserHistory = () => {
     }, [])
 
     const converJsonToDate = (date) => {
-        var currentTime = new Date(parseInt(date));
-        var month = currentTime.getMonth() + 1;
-        var day = currentTime.getDate();
-        var year = currentTime.getFullYear();
-        var date = day + "/" + month + "/" + year;
-        return date
+        const currentTime = new Date(date);
+        const month = currentTime.getMonth() + 1;
+        const day = currentTime.getDate();
+        const year = currentTime.getFullYear();
+        return  day + "/" + month + "/" + year; 
     }
 
     return (
         <>
-            user history
-            {/* data, amount of items, total price */}
             <div className="user-purchase-history">
 
-                {console.log(purchases)}
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Items</th>
-                            <th>Date</th>
-                            <th>Total Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {purchases.map((purchase, index) => {
-                            return (
-                                <tr key={purchase._id}>
-                                    <td>{index + 1}</td>
-                                    <td>{purchase.products.length}</td>
-                                    <td>{new Date(purchase.date).toUTCString()}</td>
-                                    <td>{converJsonToDate(purchase.date)}</td>
-                                    <td>{purchase.totalPrice}</td>
-                                </tr>)
-                        })}
-                    </tbody>
-                </Table>
+                <div className="user-history-table">
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Items</th>
+                                <th>Date</th>
+                                <th>Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {purchases.map((purchase, index) => {
+                                return (
+                                    <tr key={purchase._id}>
+                                        <td>{index + 1}</td>
+                                        <td>{purchase.products.length}</td>
+                                        <td>{converJsonToDate(purchase.date)}</td>
+                                        <td>&#8362;{purchase.totalPrice}</td>
+                                    </tr>)
+                            })}
+                        </tbody>
+                    </Table>
+                </div>
+
+                <div className="account-history-img"></div>
             </div>
         </>
     )
