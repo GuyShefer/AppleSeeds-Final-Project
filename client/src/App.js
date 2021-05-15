@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Main from './pages/main/Main.component';
 import Header from './components/header/Header.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +12,7 @@ import SaveProduct from './components/saveProduct/SaveProduct.component';
 import ProductsType from './pages/productsTypes/ProductsType.component';
 import Cart from './pages/cart/Cart.component';
 import User from './pages/user/User.component';
+import Page404 from './pages/404/Page404.component';
 
 function App() {
 
@@ -20,13 +21,16 @@ function App() {
       <BrowserRouter>
         <Header />
         <div className="index-section">
-          <Route exact path='/' component={Main} />
-          <Route exact path='/cart' component={Cart} />
-          <Route exact path='/admin' component={Admin} />
-          <Route exact path='/myAccount' component={User} />
-          <Route exact path='/products' component={AllProducts} />
-          <Route exact path='/saveProduct' component={SaveProduct} />
-          <Route exact path='/products/byType' component={ProductsType} />
+          <Switch>
+            <Route exact path='/' component={Main} />
+            <Route exact path='/cart' component={Cart} />
+            <Route exact path='/admin' component={Admin} />
+            <Route exact path='/myAccount' component={User} />
+            <Route exact path='/products' component={AllProducts} />
+            <Route exact path='/saveProduct' component={SaveProduct} />
+            <Route exact path='/products/byType' component={ProductsType} />
+            <Route path="*" component={Page404} />
+          </Switch>
         </div>
         <Footer />
       </BrowserRouter>

@@ -4,11 +4,13 @@ import PurchasesTable from '../../components/purchasesTable/PurchasesTable.compo
 import SaveProduct from '../../components/saveProduct/SaveProduct.component';
 import UsersTable from '../../components/usersTable/UsersTable.component';
 import './admin.style.css';
+import { useHistory } from 'react-router-dom';
 
 const Admin = (props) => {
 
     const [userType, setUserType] = useState('');
     const [componenetToDisplay, setComponenetToDisplay] = useState('');
+    const history = useHistory();
 
     useEffect(() => {
         if (props.location.userType) {
@@ -19,19 +21,19 @@ const Admin = (props) => {
     const componentSwitch = (param) => {
         switch (param) {
             case 'users':
-                return <UsersTable />
+                return <UsersTable userType={props.location.userType.type} />
             case 'purchases':
                 return <PurchasesTable />
             case 'create':
-                return <SaveProduct />
+                return <SaveProduct userType={props.location.userType.type} />
             default:
-                return <UsersTable />
+                return <UsersTable userType={props.location.userType.type} />
         }
     }
 
     return (
         <>
-            {userType === 'admin' ?
+            {props.location.userType ?
                 <div className="main-admin">
                     <hr />
                     <div className="admin-nav-bar">
@@ -43,9 +45,9 @@ const Admin = (props) => {
                         </ul>
                     </div>
 
-                    {componentSwitch(componenetToDisplay)};
+                    {props.location.userType ? componentSwitch(componenetToDisplay) : null}
                 </div>
-                : null}
+                : history.push("/404")}
         </>
     )
 }
