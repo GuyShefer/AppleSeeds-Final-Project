@@ -3,6 +3,8 @@ import './purchasesTable.style.css';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
 import Table from 'react-bootstrap/Table'
+import { ToastContainer } from 'react-toastify';
+import { errorToast, infoToast } from '../../utilities/toast';
 
 
 const PurchasesTable = () => {
@@ -10,7 +12,7 @@ const PurchasesTable = () => {
     const [purchases, setPurchases] = useState([]);
     const [forceUpdate, setForceUpdate] = useState(false);
     const token = JSON.parse(localStorage.getItem('token'));
-    
+
 
     useEffect(() => {
         const getAllPurchases = async () => {
@@ -23,11 +25,16 @@ const PurchasesTable = () => {
 
 
     const deletePurchaseById = (id, index) => {
-        axios.delete(url + '/api/purchases/' + id, { headers: { Authorization: `Bearer ${token}` } });
-        const tempPurchases = purchases;
-        tempPurchases.splice(index, 1);
-        setPurchases(tempPurchases);
-        setForceUpdate(!forceUpdate);
+        try {
+            axios.delete(url + '/api/purchases/' + id, { headers: { Authorization: `Bearer ${token}` } });
+            const tempPurchases = purchases;
+            tempPurchases.splice(index, 1);
+            setPurchases(tempPurchases);
+            setForceUpdate(!forceUpdate);
+            infoToast(`Product has been deleted successfully`);
+        } catch (err) {
+            errorToast(err.response.data);
+        }
     }
 
     return (
@@ -55,6 +62,19 @@ const PurchasesTable = () => {
                         })}
                     </tbody>
                 </Table>
+                <div>
+                    <ToastContainer
+                        position="bottom-right"
+                        autoClose={2000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+                </div>
             </div>
         </>
     )

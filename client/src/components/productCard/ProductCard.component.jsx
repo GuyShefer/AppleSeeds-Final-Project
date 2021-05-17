@@ -7,8 +7,8 @@ import { Modal } from 'react-bootstrap';
 import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addToCart } from '../../redux/Shopping/shopping-actions';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { errorToast, infoToast } from '../../utilities/toast';
 
 const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
 
@@ -34,8 +34,9 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
         try {
             const res = await axios.delete(url + `/api/products/${productDetails._id}`, { headers: { Authorization: `Bearer ${token}` } });
             forceUpdate(res.data._id);
+            infoToast('Product has been delete successfully');
         } catch (err) {
-            console.log(err.response.data);
+            errorToast(err.response.data);
         }
     }
 
@@ -60,16 +61,7 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
 
     const handleAddToCart = () => {
         addToCart(productDetails);
-
-        toast.info(`Product added to cart successfully`, {
-            position: "bottom-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        })
+        infoToast(`Product added to cart successfully`);
         setTimeout(() => {
             handleClose();
         }, 2000);
@@ -86,7 +78,7 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
                         {productDetails.quantity === 0 ? <span className="sold-out-overlay">Sold Out</span> : null}
                         <div className="product-card-header">
                             <p className="product-title-name">{productDetails.productName}</p>
-                            <p className="product-price">{productDetails.price}$</p>
+                            <p className="product-price">&#8362;{productDetails.price}</p>
                         </div>
 
                         <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.image.data)}`} alt="card product" />

@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
 import { useHistory } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { errorToast, infoToast } from '../../utilities/toast';
 
 const LogoutModal = ({ show, close, clearUserState }) => {
 
@@ -26,13 +28,16 @@ const LogoutModal = ({ show, close, clearUserState }) => {
 
         try {
             await axios.post(url + subUrl, null, { headers: { Authorization: `Bearer ${token}` } });
+            infoToast("You've been logged out");
         } catch (err) {
-            console.log(err.response.data);
+            errorToast(err.response.data)
         }
         localStorage.removeItem('token');
         handleClose();
         clearUserState();
-        history.push('/');
+        setTimeout(() => {
+            history.push('/');
+        }, 2000);
     }
 
     return (
@@ -57,6 +62,19 @@ const LogoutModal = ({ show, close, clearUserState }) => {
                     </div>
                 </Modal.Footer>
             </Modal>
+            <div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+            </div>
         </>
     )
 }

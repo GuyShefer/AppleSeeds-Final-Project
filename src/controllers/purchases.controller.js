@@ -6,10 +6,10 @@ const purchaseProducts = async (req, res) => {
     try {
         const extractPurchase = { products, totalPrice } = req.body;
         if (products.length < 1) {
-            return res.status(404).send('There are no items in the cart');
+            return res.status(404).send('There are no items in the cart.');
         }
         else if (!await isValiadTotalPriceAndQuantity(extractPurchase) || totalPrice < 0) {
-            return res.status(404).send('Total price is not valid');
+            return res.status(404).send('Sorry, we do not have enough stock of the selected jewelry.');
         }
 
         extractPurchase.owner = req.user.id;

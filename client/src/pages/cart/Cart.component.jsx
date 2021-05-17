@@ -7,9 +7,8 @@ import CartItem from '../../components/cartItem/CartItem.component';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
 import { useHistory } from 'react-router-dom';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { errorToast, infoToast } from '../../utilities/toast';
 
 const Cart = ({ cart, clearState }) => {
     const [totalPrice, setTotalPrice] = useState(0);
@@ -44,28 +43,12 @@ const Cart = ({ cart, clearState }) => {
             await axios.put(url + '/api/purchases', purchaseBody, { headers: { Authorization: `Bearer ${token}` } });
 
             clearState();
-            toast.info(`Purchase completed successfully`, {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            })
+            infoToast(`Purchase completed successfully`);
             setTimeout(() => {
                 history.push("/");
             }, 2000);
         } catch (err) {
-            toast.error(`${err.response.data}`, {
-                position: "bottom-right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            })
+            errorToast(err.response.data);
         }
     }
 

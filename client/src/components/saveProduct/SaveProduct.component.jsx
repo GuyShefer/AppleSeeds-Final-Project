@@ -5,13 +5,15 @@ import axios from 'axios';
 import url from '../../utilities/serverURL';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
+import { ToastContainer } from 'react-toastify';
+import { errorToast, successToast } from '../../utilities/toast';
 
 const SaveProduct = (props) => {
     const initProductState = { productName: '', productType: 'earrings', bestSeller: false, quantity: 0, price: 0, image: '', material: 'silver', description: '' };
     const [product, setProduct] = useState(initProductState);
     const [updateProduct, setUpateProduct] = useState(false);
-    const history = useHistory();
     const [userType] = useState(props.userType || props.location.userType);
+    const history = useHistory();
 
     useEffect(() => {
 
@@ -45,20 +47,25 @@ const SaveProduct = (props) => {
 
             try {
                 await axios.put(url + `/api/products/updateProduct/byform`, formData, { headers: { Authorization: `Bearer ${token}` } });
-                history.push({
-                    pathname: `/admin`,
-                    userType: { type: 'admin' },
-                });
+                successToast(`Product has been updated successfully`);
+                setTimeout(() => {
+                    history.push({
+                        pathname: `/admin`,
+                        userType: { type: 'admin' },
+                    });
+                }, 2000);
             } catch (err) {
-                console.log(err.response.data);
+                errorToast(err.response.data.error)
             }
         }
         else {// create new product
             try {
                 await axios.post(url + "/api/products", formData, { headers: { Authorization: `Bearer ${token}` } });
                 setProduct(initProductState);
+                successToast(`Product has been added successfully`);
             } catch (err) {
                 console.log(err.response.data);
+                errorToast(err.response.data.error)
             }
         }
     }
@@ -75,7 +82,6 @@ const SaveProduct = (props) => {
                             <Form.Control type="text" placeholder="Name" value={product.productName} required onChange={(e) => {
                                 return setProduct({ ...product, productName: e.target.value })
                             }} />
-                            {/* <Form.Text className="text-muted"> We'll never share your email with anyone else.</Form.Text> */}
                         </Form.Group>
 
                         <Form.Group controlId="exampleForm.ControlSelect1">
@@ -97,7 +103,6 @@ const SaveProduct = (props) => {
                             <Form.Control type="number" min="0" placeholder="Amount" value={product.quantity} required onChange={e => {
                                 return setProduct({ ...product, quantity: e.target.value })
                             }} />
-                            {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
                         </Form.Group>
 
 
@@ -118,12 +123,11 @@ const SaveProduct = (props) => {
                             <Form.Control type="number" min="0" placeholder="Price" value={product.price} required onChange={e => {
                                 return setProduct({ ...product, price: e.target.value })
                             }} />
-                            {/* <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text> */}
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Description</Form.Label>
-                            <Form.Control value={product.description} style={{ resize: 'none' }} as="textarea" rows={2} onChange={e => {
+                            <Form.Control value={product.description} style={{ resize: 'none' }} as="textarea" rows={2} required onChange={e => {
                                 return setProduct({ ...product, description: e.target.value })
                             }} />
                         </Form.Group>
@@ -149,6 +153,19 @@ const SaveProduct = (props) => {
                     </Form>
                 </div>
                 : history.push("/404")}
+            <div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+            </div>
         </>
     )
 }
