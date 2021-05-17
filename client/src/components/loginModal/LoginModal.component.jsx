@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './loginModal.style.css';
 import Modal from 'react-bootstrap/Modal';
-
 import axios from 'axios';
 import url from '../../utilities/serverURL';
 import Formsy, { addValidationRule } from 'formsy-react';
 import MyInput from '../myInput/MyInput.component';
-
+import error from '../../utilities/formsyErrors';
 
 const LoginModal = ({ show, close, swapModal, setUser }) => {
 
@@ -27,15 +26,6 @@ const LoginModal = ({ show, close, swapModal, setUser }) => {
         }
         return false;
     })
-
-    const error = {
-        isEmail: 'You have to type a valid email',
-        maxLength: 'You cannot type more than 25 characters',
-        minLength: 'You must type more than 8 characters',
-        isAlpha: 'You can only type letters',
-        equalsField: 'Password is not match',
-        isStrong: 'Your password is not strong'
-    }
 
     const loginUser = async (loginDetails) => {
         try {
@@ -60,13 +50,13 @@ const LoginModal = ({ show, close, swapModal, setUser }) => {
                         <MyInput label="Email address" type="text" name="email" validations="maxLength:25,isEmail" validationErrors={error} placeHolder="Type your email address..." required />
                         <MyInput label="Password" type="password" name="password" validations="minLength:8,isStrong" validationErrors={error} placeHolder="Type your password..." required />
                         <div className="div-btn-submit">
-                            <button className="ui inverted green button" type="submit" disabled={!canSubmit}>Sign up</button>
+                            <button className="large ui inverted green button" type="submit" disabled={!canSubmit}>Sign In</button>
                         </div>
                     </Formsy>
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <p className="register-q">No account? <span className="sing-up-btn" onClick={swapModal}> Sign up</span></p>
+                    <p className="register-q">No account? <span className="sing-up-btn" onClick={swapModal}>Sign up</span></p>
                 </Modal.Footer>
             </Modal>
         </>
