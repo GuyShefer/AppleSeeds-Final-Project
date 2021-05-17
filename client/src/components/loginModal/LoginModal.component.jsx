@@ -6,6 +6,9 @@ import url from '../../utilities/serverURL';
 import Formsy, { addValidationRule } from 'formsy-react';
 import MyInput from '../myInput/MyInput.component';
 import error from '../../utilities/formsyErrors';
+import { ToastContainer } from 'react-toastify';
+import { errorToast, infoToast } from '../../utilities/toast';
+
 
 const LoginModal = ({ show, close, swapModal, setUser }) => {
 
@@ -31,10 +34,11 @@ const LoginModal = ({ show, close, swapModal, setUser }) => {
         try {
             const response = await axios.post(url + '/api/users/login', loginDetails);
             localStorage.setItem('token', JSON.stringify(await response.data.token));
-            setUser(response.data.user[0])
+            setUser(response.data.user[0]);
+            infoToast('Login success!')
             close();
         } catch (err) {
-            console.log(err.response.data);
+            errorToast(err.response.data);
         }
     }
 
@@ -59,6 +63,18 @@ const LoginModal = ({ show, close, swapModal, setUser }) => {
                     <p className="register-q">No account? <span className="sing-up-btn" onClick={swapModal}>Sign up</span></p>
                 </Modal.Footer>
             </Modal>
+
+            <ToastContainer
+                position="bottom-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </>
     )
 }

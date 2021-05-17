@@ -6,12 +6,12 @@ import axios from 'axios';
 import Formsy, { addValidationRule } from 'formsy-react';
 import MyInput from '../myInput/MyInput.component';
 import error from '../../utilities/formsyErrors';
-
+import { ToastContainer } from 'react-toastify';
+import { errorToast, infoToast } from '../../utilities/toast';
 
 const RegisterModal = ({ show, close, swapModal }) => {
 
     const initRegisterAccount = { email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' };
-    // const [registerAccount, setRegisterAccount] = useState(initRegisterAccount);
     const [canSubmit, setCanSubmit] = useState(false);
 
     const enableSubmitButton = () => {
@@ -43,14 +43,14 @@ const RegisterModal = ({ show, close, swapModal }) => {
                 registerData[key] = registerDetails[key];
             }
         })
-        console.log(registerData);
+
         try {
             const response = await axios.post(url + '/api/users/', registerData);
             localStorage.setItem('token', JSON.stringify(await response.data.token));
+            infoToast('User Registration Successfull!');
             close();
-            console.log(response.data);
         } catch (err) {
-            console.log(err.response.data);
+            errorToast(err.response);
         }
     }
 
@@ -89,6 +89,19 @@ const RegisterModal = ({ show, close, swapModal }) => {
                         <p className="register-q">Already have an account? <span className="sing-up-btn" onClick={swapModal}> Log in</span></p>
                     </Modal.Footer>
                 </Modal>
+            </div>
+            <div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </div>
         </>
     )

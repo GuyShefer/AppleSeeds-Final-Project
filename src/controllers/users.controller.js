@@ -30,11 +30,13 @@ const addUser = async (req, res) => {
 
 const login = async (req, res) => {
     const { email, password } = req.body;
-    if (email == null || password == null) {
-        return res.status(404).send('Invalid login details');
-    }
-
     try {
+        if (email == null || password == null) {
+            return res.status(404).send('Invalid login details');
+        }
+        else if (await !isEmailExist) {
+            return res.status(404).send('Unable to login');
+        }
         const user = await User.findByCredentials(email, password);
         const token = await user[0].generateAuthToken();
         res.status(200).send({ user, token });
@@ -93,7 +95,6 @@ const updateUser = async (req, res) => {
         return res.status(400).send({ error: 'Invalid updates.' })
     }
     else if (req.body.password != null) {
-        //    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/
         if (!regex.test(req.body.password)) {
             return res.status(404).send('password must contain at least 8 characters, and iclude one uppercase and one lowercase letter and one number.  ')
         }

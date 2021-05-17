@@ -34,7 +34,7 @@ const isProductNameExist = async (name) => {
 
 const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find({}, { image: 1, price: 1, productName: 1 });
+        const products = await Product.find({}, { image: 1, price: 1, productName: 1, quantity: 1 });
         if (!products) {
             return res.status(404).send();
         }
@@ -46,7 +46,7 @@ const getAllProducts = async (req, res) => {
 
 const getAllBestSellerProducts = async (req, res) => {
     try {
-        const products = await Product.find({ bestSeller: true }, { image: 1, price: 1, productName: 1, quantity: 1}).limit(8);
+        const products = await Product.find({ bestSeller: true }, { image: 1, price: 1, productName: 1, quantity: 1 }).limit(8);
         if (!products) {
             return res.status(404).send();
         }
@@ -133,7 +133,7 @@ const getAllProductsByType = async (req, res) => {
         return res.status(400).send({ error: "Invalid type" });
     }
     try {
-        const products = await Product.find({ productType }, { image: 1, price: 1, productName: 1 });
+        const products = await Product.find({ productType }, { image: 1, price: 1, productName: 1, quantity: 1 });
         res.status(200).json(products);
     } catch (err) {
         res.status(500).send(err);
