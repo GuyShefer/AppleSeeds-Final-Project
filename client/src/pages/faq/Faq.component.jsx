@@ -13,7 +13,7 @@ const Faq = () => {
                 </div>
 
                 <div className="questions-container">
-                    <Accordion defaultActiveKey="0">
+                    <Accordion>
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey="0">Where our products come from?</Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
