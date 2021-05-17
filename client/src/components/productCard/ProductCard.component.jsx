@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './productCard.style.css';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
@@ -7,13 +7,20 @@ import { Modal } from 'react-bootstrap';
 import { Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addToCart } from '../../redux/Shopping/shopping-actions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
 
     const [productDetails] = useState(product);
     const [showProductModal, setShowModal] = useState(false);
     const [productToDisplay, setProduct] = useState({});
+    const [addToCartBtnDisabled, setAddToCartBtn] = useState(false);
     const history = useHistory();
+
+    useEffect(() => {
+        product.quantity === 0 ? setAddToCartBtn(true) : setAddToCartBtn(false)
+    }, [product.quantity])
 
     const arrayBufferToBase64 = (buffer) => {
         let binary = '';
@@ -53,7 +60,20 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
 
     const handleAddToCart = () => {
         addToCart(productDetails);
-        handleClose();
+
+        toast.info(`Product added to cart successfully`, {
+            position: "bottom-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        })
+        setTimeout(() => {
+            handleClose();
+        }, 2000);
+
     }
 
     return (
@@ -61,11 +81,14 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
             <div className="card-wrapper">
 
                 <div className="product-card">
+
                     <div className="card-image">
+                        {productDetails.quantity === 0 ? <span className="sold-out-overlay">Sold Out</span> : null}
                         <div className="product-card-header">
                             <p className="product-title-name">{productDetails.productName}</p>
                             <p className="product-price">{productDetails.price}$</p>
                         </div>
+
                         <img src={`data:image/jpeg;base64,${arrayBufferToBase64(productDetails.image.data)}`} alt="card product" />
                         <div className="card-button" onClick={openProductModal}>QUICK VIEW</div>
                     </div>
@@ -96,8 +119,22 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
                             {productToDisplay.description}
                         </div>
                         <div className="add-tocart">
-                            <Button color='blue' onClick={handleAddToCart}>ADD TO CART</Button> {/* redux */}
+                            <Button color='blue' onClick={handleAddToCart} disabled={addToCartBtnDisabled}>ADD TO CART</Button> {/* redux */}
                         </div>
+                    </div>
+
+                    <div>
+                        <ToastContainer
+                            position="bottom-right"
+                            autoClose={2000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                        />
                     </div>
 
                 </Modal.Body>
@@ -105,6 +142,7 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
                     <Button onClick={handleClose}>Close</Button>
                 </Modal.Footer>
             </Modal>
+
         </>
     )
 }

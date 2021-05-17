@@ -8,6 +8,9 @@ import axios from 'axios';
 import url from '../../utilities/serverURL';
 import { useHistory } from 'react-router-dom';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Cart = ({ cart, clearState }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
@@ -39,11 +42,30 @@ const Cart = ({ cart, clearState }) => {
         const purchaseBody = { products: pruchaseCart, totalPrice };
         try {
             await axios.put(url + '/api/purchases', purchaseBody, { headers: { Authorization: `Bearer ${token}` } });
-            history.push("/");
+
             clearState();
-            //message the client for success
+            toast.info(`Purchase completed successfully`, {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+            setTimeout(() => {
+                history.push("/");
+            }, 2000);
         } catch (err) {
-            console.log(err.response.data);
+            toast.error(`${err.response.data}`, {
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
         }
     }
 
@@ -65,6 +87,19 @@ const Cart = ({ cart, clearState }) => {
                         <Button color="blue" onClick={purchaseProducts}>CHECKOUT</Button>
                     </div>
                 </div>
+            </div>
+            <div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </div>
         </>
     )

@@ -46,7 +46,7 @@ const getAllProducts = async (req, res) => {
 
 const getAllBestSellerProducts = async (req, res) => {
     try {
-        const products = await Product.find({ bestSeller: true }, { image: 1, price: 1, productName: 1 }).limit(8);
+        const products = await Product.find({ bestSeller: true }, { image: 1, price: 1, productName: 1, quantity: 1}).limit(8);
         if (!products) {
             return res.status(404).send();
         }
@@ -64,8 +64,8 @@ const updateProduct = async (req, res) => {
     if (!isValidOperation) {
         return res.status(406).send({ error: "Invalid updaes" });
     }
-    else if (req.body.price < 0 || req.body.quantity < 0) {
-        return res.status(406).send({ error: "Price or Quantity isnt a positive value " });
+    else if (req.body.price < 10 || req.body.quantity < 10) {
+        return res.status(406).send({ error: "Price or Quantity is less than 10." });
     }
     try {
         let extractProduct = { productType, material, price, quantity, productName, bestSeller } = req.body;
