@@ -1,3 +1,13 @@
 .register-modal .form-control {
     margin: 10px 0;
 }
+
+.acc-details-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+}
+
+.modal-reg-btn {
+    text-align: center;
+}

@@ -1,79 +1,95 @@
 import React, { useState } from 'react';
 import './registerModal.style.css';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import url from '../../utilities/serverURL';
 import axios from 'axios';
+import Formsy, { addValidationRule } from 'formsy-react';
+import MyInput from '../myInput/MyInput.component';
+import error from '../../utilities/formsyErrors';
 
 
 const RegisterModal = ({ show, close, swapModal }) => {
 
     const initRegisterAccount = { email: '', password: '', firstName: '', lastName: '', address: { city: '', street: '', houseNumber: '', zip: '' }, phone: '' };
-    const [registerAccount, setRegisterAccount] = useState(initRegisterAccount);
+    // const [registerAccount, setRegisterAccount] = useState(initRegisterAccount);
+    const [canSubmit, setCanSubmit] = useState(false);
 
-    const register = async () => {
-        console.log(registerAccount);
+    const enableSubmitButton = () => {
+        setCanSubmit(true);
+    }
+
+    const disableSubmitButton = () => {
+        setCanSubmit(false);
+    }
+
+    addValidationRule('isValidPhone', (values, value) => {
+        if (value != null) {
+            if (value.length < 10) {
+                return false
+            }
+        }
+        return true;
+    })
+
+    const register = async (registerDetails) => {
+
+        const registerData = initRegisterAccount;
+        Object.entries(initRegisterAccount).forEach(([key, value]) => {
+            if (key === 'address') {
+                Object.keys(initRegisterAccount[key]).forEach(addressKey => {
+                    registerData[key][addressKey] = registerDetails[addressKey]
+                })
+            } else {
+                registerData[key] = registerDetails[key];
+            }
+        })
+        console.log(registerData);
         try {
-            const response = await axios.post(url + '/api/users/', registerAccount);
+            const response = await axios.post(url + '/api/users/', registerData);
             localStorage.setItem('token', JSON.stringify(await response.data.token));
             close();
+            console.log(response.data);
         } catch (err) {
-            console.log(err.message);
+            console.log(err.response.data);
         }
     }
 
     return (
         <>
-            <Modal show={show} onHide={close} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Create Your Account</Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="register-modal">
+            <div className="register-modal">
+                <Modal show={show} onHide={close} centered size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Create Your Account</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
 
-                    <Form.Control type="email" placeholder="Enter Email" required onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, email: e.target.value });
-                    }} />
+                        <Formsy className='form' onValidSubmit={register} onValid={enableSubmitButton} onInvalid={disableSubmitButton}>
 
-                    <Form.Control type="password" placeholder="Enter Password" required onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, password: e.target.value });
-                    }} />
+                            <MyInput label="Email address" type="text" name="email" validations="maxLength:25,isEmail" validationErrors={error} placeHolder="Type your email address..." required />
+                            <MyInput label="Password" type="password" name="password" validations="minLength:8,isStrong" validationErrors={error} placeHolder="Type your password..." required />
+                            <MyInput label="Confirm password" type="password" name="repassword" validations="equalsField:password" validationErrors={error} placeHolder="Type your password again..." required />
+                            <hr />
+                            <div className="acc-details-grid">
+                                <MyInput label="First name" type="text" name="firstName" validations="isAlpha" validationErrors={error} placeHolder="Type your first name..." required />
+                                <MyInput label="Last name" type="text" name="lastName" validations="isAlpha" validationErrors={error} placeHolder="Type your last name..." required />
+                                <MyInput label="Phone" type="text" name="phone" validations="isValidPhone" validationErrors={error} placeHolder="Type your phone number..." required />
+                                <MyInput label="City" type="text" name="city" validations="isWords" validationErrors={error} placeHolder="Type your city name..." required />
+                                <MyInput label="Street" type="text" name="street" validations="isWords" validationErrors={error} placeHolder="Type your street name..." required />
+                                <MyInput label="House number" type="number" name="houseNumber" validations="isInt" validationErrors={error} placeHolder="Type your house number.." required />
+                                <MyInput label="Zip" type="number" name="zip" validations="isInt" validationErrors={error} placeHolder="Type your zip code.." required />
+                            </div>
 
-                    <Form.Control type="text" placeholder="First Name" onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, firstName: e.target.value });
-                    }} />
+                            <div className="modal-reg-btn">
+                                <button className="large ui inverted green button" type="submit" onClick={register} disabled={!canSubmit}>Sign Up</button>
+                            </div>
+                        </Formsy>
 
-                    <Form.Control type="text" placeholder="Last Name" onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, lastName: e.target.value });
-                    }} />
-
-                    <Form.Control type="text" placeholder="Phone Number" onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, phone: e.target.value });
-                    }} />
-
-                    <Form.Control type="text" placeholder="City" onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, address: { ...registerAccount.address, city: e.target.value } });
-                    }} />
-
-                    <Form.Control type="text" placeholder="Street" onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, address: { ...registerAccount.address, street: e.target.value } });
-                    }} />
-
-                    <Form.Control type="number" placeholder="House Number" onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, address: { ...registerAccount.address, houseNumber: e.target.value } });
-                    }} />
-
-                    <Form.Control type="number" placeholder="Zip Code" onChange={(e) => {
-                        return setRegisterAccount({ ...registerAccount, address: { ...registerAccount.address, zip: e.target.value } });
-                    }} />
-
-                    <div className="modal-btns">
-                        <button className="ui inverted green button" onClick={register}>REGISTER</button>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <p className="register-q">Already have an account? <span className="sing-up-btn" onClick={swapModal}> Log in</span></p>
-                </Modal.Footer>
-            </Modal>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <p className="register-q">Already have an account? <span className="sing-up-btn" onClick={swapModal}> Log in</span></p>
+                    </Modal.Footer>
+                </Modal>
+            </div>
         </>
     )
 }

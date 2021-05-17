@@ -1,0 +1,28 @@
+.faq-main-container {
+    padding: 0 150px;
+    margin-top: 20px;
+    font-family: 'Assistant', sans-serif;
+}
+
+.faq-title {
+    font-size: 34px;
+    padding: 30px 0;
+    border-bottom: 1px solid #999;
+}
+
+.questions-container {
+    margin-top: 20px;
+}
+
+.card-header {
+    font-size: 20px;
+    font-weight: 600;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    background: none;
+}
+
+.card-body {
+    font-size: 16px;
+}

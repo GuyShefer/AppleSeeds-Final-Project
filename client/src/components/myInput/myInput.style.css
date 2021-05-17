@@ -1,0 +1,19 @@
+.input-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+}
+
+.myinput-label {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.span-err-msg {
+    height: 16px;
+    color: red;
+}
+
+.div-btn-submit {
+    text-align: center;
+}

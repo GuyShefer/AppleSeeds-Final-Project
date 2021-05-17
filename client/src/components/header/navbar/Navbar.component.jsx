@@ -96,7 +96,7 @@ const Navbar = ({ cart }) => {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </li>
-                        <li className="nav-list-item"><span>FAQ</span></li>
+                        <li className="nav-list-item"><Link to={"/faq"}><span>FAQ</span></Link></li>
                         <li className="nav-list-item"><span>OUR STORY</span></li>
                         {user.userType === 'admin' ? <Link to={{ pathname: "/admin", userType: { type: `${user.userType}` } }}> <li className="nav-list-item"><span>ADMIN</span></li> </Link> : null}
                     </ul>

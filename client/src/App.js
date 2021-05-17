@@ -13,6 +13,7 @@ import ProductsType from './pages/productsTypes/ProductsType.component';
 import Cart from './pages/cart/Cart.component';
 import User from './pages/user/User.component';
 import Page404 from './pages/404/Page404.component';
+import Faq from './pages/faq/Faq.component';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <div className="index-section">
           <Switch>
             <Route exact path='/' component={Main} />
+            <Route exact path='/faq' component={Faq} />
             <Route exact path='/cart' component={Cart} />
             <Route exact path='/admin' component={Admin} />
             <Route exact path='/myAccount' component={User} />

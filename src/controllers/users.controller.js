@@ -5,10 +5,8 @@ const validPassowrd = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
 
 const addUser = async (req, res) => {
     const extractUser = { email, password, firstName, lastName, address } = req.body;
-    if (email == null || password == null || firstName == null || lastName == null || address == null) {
-        return res.status(404).send('Invalid user details');
-    }
-    else if (!validator.isEmail(email)) {
+
+    if (!validator.isEmail(email)) {
         return res.status(404).send('Invalid Email');
     }
     else if (await isEmailExist(email)) {
@@ -17,14 +15,16 @@ const addUser = async (req, res) => {
     else if (!validPassowrd.test(password)) {
         return res.status(404).send('password must contain at least 8 characters, and iclude one uppercase and one lowercase letter and one number.');
     }
-    try {
-        const user = new User(extractUser);
-        await user.save();
-        // sendWelcomeEmail(email, firstName); /////////
-        const token = await user.generateAuthToken();
-        res.status(201).send({ messege: 'User has been created.', token });
-    } catch (err) {
-        res.status(400).send(err.message);
+    else {
+        try {
+            const user = new User(extractUser);
+            await user.save();
+            // sendVerifactionEmail(email, firstName);
+            const token = await user.generateAuthToken();
+            res.status(201).send({ messege: 'User has been created.', token });
+        } catch (err) {
+            res.status(400).send(err.message);
+        }
     }
 }
 
@@ -87,12 +87,14 @@ const updateUser = async (req, res) => {
     const updates = Object.keys(req.body);
     const allowUpdates = ['email', 'password', 'firstName', 'lastName', 'address', 'phone'];
     const isValidOperation = updates.every(update => allowUpdates.includes(update));
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
     if (!isValidOperation) {
         return res.status(400).send({ error: 'Invalid updates.' })
     }
     else if (req.body.password != null) {
-        if (!(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(req.body.password)) {
+        //    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[a-zA-Z\d]{8,}$/
+        if (!regex.test(req.body.password)) {
             return res.status(404).send('password must contain at least 8 characters, and iclude one uppercase and one lowercase letter and one number.  ')
         }
     }
