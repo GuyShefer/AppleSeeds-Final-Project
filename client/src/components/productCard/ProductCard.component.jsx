@@ -71,9 +71,7 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
     return (
         <>
             <div className="card-wrapper">
-
                 <div className="product-card">
-
                     <div className="card-image">
                         {productDetails.quantity === 0 ? <span className="sold-out-overlay">Sold Out</span> : null}
                         <div className="product-card-header">

@@ -14,6 +14,7 @@ import Cart from './pages/cart/Cart.component';
 import User from './pages/user/User.component';
 import Page404 from './pages/404/Page404.component';
 import Faq from './pages/faq/Faq.component';
+import AboutUs from './pages/about/AboutUs.component';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route exact path='/faq' component={Faq} />
             <Route exact path='/cart' component={Cart} />
             <Route exact path='/admin' component={Admin} />
+            <Route exact path="/about" component={AboutUs} />
             <Route exact path='/myAccount' component={User} />
             <Route exact path='/products' component={AllProducts} />
             <Route exact path='/saveProduct' component={SaveProduct} />
