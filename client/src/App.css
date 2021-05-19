@@ -40,3 +40,11 @@
 .index-section {
   padding: 210px 0 0;
 }
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+  .index-section {
+      padding: 0;
+  }
+}

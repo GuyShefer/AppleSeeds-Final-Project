@@ -172,3 +172,30 @@
     -webkit-transform: rotate(-45deg) scale(0.75,1);
     z-index: 10;
     }
+
+
+    /* media queries */
+
+@media screen and (max-width: 600px) {
+    .product-card {
+        width: 150px;
+        height: 150px;
+    }
+    .product-card-modal-body img {
+        width: 100px;
+        height: 100px;
+    }
+    .modal-content {
+        max-width: 320px;
+        max-height: 400px;
+    }
+    .product-description {
+        display: none;
+    }
+    .right-side-modal .h3 {
+        text-align: center;
+    }
+    .user-action-button {
+        padding: 0 10px;
+    }
+}

@@ -18,3 +18,14 @@
     height: 50vh;
     background: url('../../images/model-3.jpg') no-repeat center center/cover;
 }
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .account-history-img {
+        display: none;
+    }
+    .user-history-table {
+        width: 100%;
+    }
+}

@@ -22,3 +22,17 @@
 .horizontal-line {
     margin-bottom: 30px;
 }
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .all-products-container {
+        width: 100vw;
+    }
+    .img-advert {
+        display: none;
+    }
+    .all-products-grid {
+        grid-template-columns: repeat(2, auto);
+    }
+}

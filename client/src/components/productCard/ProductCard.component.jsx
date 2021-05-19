@@ -92,7 +92,7 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
                 }
             </div>
 
-            <Modal show={showProductModal} onHide={handleClose} size="lg" centered>
+            <Modal className="product-modal-mobile" show={showProductModal} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>{productToDisplay.productName}</Modal.Title>
                 </Modal.Header>

@@ -9,7 +9,7 @@
 }
 
 .top-footer-serction {
-    height: 240px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -32,4 +32,12 @@
 
 p:last-child {
     padding-bottom: 20px;
+}
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .footer { 
+        padding: 0 20px;
+    }
 }
