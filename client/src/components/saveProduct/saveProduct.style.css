@@ -1,5 +1,5 @@
 .product-save {
-    height: 500px;
+    height: auto;
     width: 100%;
     padding: 0 150px;
     margin-top: 20px;
@@ -27,4 +27,12 @@
 .form-check {
     display: flex;
     justify-content: center;
+}
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .product-save {
+        padding: 0 20px;
+    }
 }

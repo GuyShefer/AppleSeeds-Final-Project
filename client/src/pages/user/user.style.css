@@ -31,3 +31,12 @@
 .user-nav-list li:hover {
     color: royalblue;
 }
+
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .user-details-main {
+        margin: 20px 20px 0;
+    }
+}

@@ -30,3 +30,17 @@
 .admin-nav-bar a:hover {
     color: royalblue;
 }
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .main-admin {
+        padding: 0 10px;
+    }
+    .admin-nav-bar li {
+        margin: 0 5px;
+    }
+    .admin-nav-bar ul {
+        padding: 0;
+    }
+}

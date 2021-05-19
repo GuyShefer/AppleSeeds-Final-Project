@@ -1,6 +1,5 @@
 
 .nav-bar {
-    height: 170px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -197,4 +196,35 @@
 
 .nav-list-item a {
     color: #333;
+}
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .nav-bar {
+        flex-direction: column;
+    }
+    .nav-list-menu .nav-list {
+        flex-direction: column;
+        margin: 20px 0;
+        padding: 20px 0;
+    }
+    .nav-list-item {
+        margin: 10px 0;
+        padding: 10px 0;
+    }
+    .nav-list-menu{
+        border-top: 1px dotted #999;
+        width: 100%;
+    }
+    .dropdown .btn-primary {
+        padding: 0;
+        line-height: 0;
+    }
+    .user-details{
+        height: 120px;
+        width: 100%;
+        flex-direction: column;
+        border-top: 1px dotted #999;
+    }
 }

@@ -12,3 +12,12 @@
     grid-template-columns: repeat(4, auto);
 }
 
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .products-type-grid {
+        grid-template-columns: repeat(2, auto);
+        margin: 0;
+    }
+}
