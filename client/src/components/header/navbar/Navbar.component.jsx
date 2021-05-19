@@ -82,7 +82,7 @@ const Navbar = ({ cart }) => {
 
                 <div className="nav-list-menu">
                     <ul className="nav-list">
-                        <li>
+                        <li className="nav-list-item">
                             <Dropdown show={showNavDropDown}
                                 onMouseEnter={showDropdown}
                                 onMouseLeave={hideDropdown}>

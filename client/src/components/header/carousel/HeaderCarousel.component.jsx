@@ -2,8 +2,16 @@ import React from 'react';
 import RBCarousel from "react-bootstrap-carousel";
 import "bootstrap/dist/css/bootstrap.css";
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
+import './headerCarousel.style.css';
 
 const HeaderCarousel = () => {
+
+    const contentArr = [
+        'FREE DOMESTIC SHIPPING ON OREDERS OVER 150$',
+        'ALL ORDERS ARE SHIPPED FROM OUR ISRAEL OFFICE USING ISRAEL POST SERVICES',
+        'PLEASE ALLOW 3 WORKING DAYS FOR ALL ORDERS TO BE ORDERS TO BE PROCESSED AND SHIPPING'
+    ]
+
 
     return (
         <>
@@ -14,23 +22,14 @@ const HeaderCarousel = () => {
                 version={4}
                 leftIcon={true}
                 rightIcon={true}>
-
-                <div className="carousel-item1" >
-                    <div className="carousel-center">
-                        <div>FREE DOMESTIC SHIPPING ON OREDERS OVER 150$</div>
+                {contentArr.map((content, index) => {
+                    return <div className="carousel-item1" key={index}>
+                        <div className="carousel-center">
+                            <div className="carousel-content">{content}</div>
+                        </div>
+                        <div className="carousel-center"> </div>
                     </div>
-                    <div className="carousel-center"> </div>
-                </div>
-                <div className="carousel-item1">
-                    <div className="carousel-center">
-                        <div>ALL ORDERS ARE SHIPPED FROM OUR ISRAEL OFFICE USING ISRAEL POST SERVICES</div>
-                    </div>
-                </div>
-                <div className="carousel-item1" >
-                    <div className="carousel-center">
-                        <div>PLEASE ALLOW 3 WORKING DAYS FOR ALL ORDERS TO BE ORDERS TO BE PROCESSED AND SHIPPING</div>
-                    </div>
-                </div>
+                })}
             </RBCarousel>
         </>
     )
