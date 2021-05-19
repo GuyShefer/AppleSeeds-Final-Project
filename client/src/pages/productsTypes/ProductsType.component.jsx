@@ -3,12 +3,14 @@ import './productsType.style.css';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
 import ProductCard from '../../components/productCard/ProductCard.component';
+import Spinner from '../../components/spinner/Spinner.component';
 
 const ProductsType = (props) => {
 
     const [productsType, setProductsType] = useState(props.location.productsType);
     const [products, setProducts] = useState([]);
     const [userType] = useState(props.location.userType);
+    const [displaySpinner, setDisplaySpinner] = useState(true);
 
     useEffect(() => {
         setProductsType(props.location.productsType);
@@ -18,9 +20,11 @@ const ProductsType = (props) => {
         let type = productsType;
 
         const getAllProudctsByType = async () => {
+            setDisplaySpinner(true);
             if (!type) { type = 'earrings' };
             const response = await axios.get(url + `/api/products/byType/${type}`);
             setProducts(response.data);
+            setDisplaySpinner(false);
         }
         getAllProudctsByType();
     }, [productsType])
@@ -33,14 +37,14 @@ const ProductsType = (props) => {
     return (
         <>
             <div className="products-type-container">
+                {displaySpinner ? <Spinner /> : null}
                 <div className="products-type-grid">
-                    {   products.map(product => {
-                            return <ProductCard key={product._id} product={product} userType={userType} forceUpdate={forceUpdateComponent} />
-                        })}
-                        
+                    {products.map(product => {
+                        return <ProductCard key={product._id} product={product} userType={userType} forceUpdate={forceUpdateComponent} />
+                    })}
+
                 </div>
             </div>
-            {console.log( products)}
         </>
     )
 }

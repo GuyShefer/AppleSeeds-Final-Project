@@ -1,9 +1,11 @@
 .products-type-container {
     display: flex;
     justify-content: center;
+    min-height: 60vh;
 }
 
 .products-type-grid {
+    border-top: 1px solid #999;
     padding: 20px 0;
     margin: 30px 50px 0;
     display: inline-grid;
