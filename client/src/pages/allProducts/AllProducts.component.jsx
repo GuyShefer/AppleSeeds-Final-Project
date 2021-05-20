@@ -3,11 +3,13 @@ import './allProducts.style.css';
 import axios from 'axios';
 import url from '../../utilities/serverURL';
 import ProductCard from '../../components/productCard/ProductCard.component';
+import Spinner from '../../components/spinner/Spinner.component';
 
 const AllProducts = (props) => {
 
     const [userType, setUserType] = useState(null);
     const [products, setProducts] = useState([]);
+    const [displaySpinner, setDisplaySpinner] = useState(false);
 
     useEffect(() => {
         if (props.history.location.userType) {
@@ -15,7 +17,9 @@ const AllProducts = (props) => {
         }
 
         const getAllProducts = async () => {
+            setDisplaySpinner(true);
             const response = await axios.get(url + '/api/products');
+            setDisplaySpinner(false);
             setProducts(response.data)
         }
 
@@ -31,11 +35,13 @@ const AllProducts = (props) => {
 
     return (
         <>
+
             <div className="all-products-container">
+                {displaySpinner ? <Spinner /> : null}
                 <div className="horizontal-line">
                     <hr />
                     <div className="all-products-grid">
-                        <div className="img-advert"></div>
+                        {products.length > 0 ? <div className="img-advert"></div> : null}
                         {products.map(product => {
                             return <ProductCard key={product._id} product={product} userType={userType} forceUpdate={forceUpdateComponent} />
                         })}

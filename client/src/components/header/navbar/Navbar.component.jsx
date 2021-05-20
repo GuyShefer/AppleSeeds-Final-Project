@@ -49,9 +49,6 @@ const Navbar = ({ cart }) => {
         if (token) {
             const response = await axios.get(url + '/api/users/getAccInfo', { headers: { Authorization: `Bearer ${token}` } })
             setUser(response.data);
-            console.log(response.data);
-            /// notificate the user that the log in succsess
-
         } else {
             setLoginModalShow(true);
         }

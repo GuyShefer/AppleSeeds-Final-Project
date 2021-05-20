@@ -64,8 +64,7 @@ const SaveProduct = (props) => {
                 setProduct(initProductState);
                 successToast(`Product has been added successfully`);
             } catch (err) {
-                console.log(err.response.data);
-                errorToast(err.response.data.error)
+                errorToast(err.response.data)
             }
         }
     }

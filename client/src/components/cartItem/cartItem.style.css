@@ -41,3 +41,17 @@
     background: #e2e2e2;
     cursor: pointer;
 }
+
+
+/* media queries */
+
+@media screen and (max-width: 600px) {
+    .cart-image-container {
+        width: 70px;
+        height: 70px;
+    }
+    .qty-update {
+        width: auto;
+        height: auto;
+    }
+}

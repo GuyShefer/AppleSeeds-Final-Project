@@ -4,6 +4,7 @@
 }
 
 .all-products-grid {
+    min-height: 50vh;
     padding: 20px 0;
     margin: 30px 50px 0;
     display: inline-grid;

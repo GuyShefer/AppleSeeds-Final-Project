@@ -50,7 +50,6 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
 
     const openProductModal = async () => {
         const response = await axios.patch(url + `/api/products/${productDetails._id}`);
-        console.log(response.data);
         setProduct(response.data);
         setShowModal(!showProductModal);
     }
