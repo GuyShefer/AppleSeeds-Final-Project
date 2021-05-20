@@ -19,8 +19,8 @@ const AllProducts = (props) => {
         const getAllProducts = async () => {
             setDisplaySpinner(true);
             const response = await axios.get(url + '/api/products');
-            setProducts(response.data)
             setDisplaySpinner(false);
+            setProducts(response.data)
         }
 
         getAllProducts();
