@@ -83,12 +83,12 @@ const ProductCard = ({ userType, product, forceUpdate, addToCart }) => {
                     </div>
                 </div>
 
-                {userType &&
+                {userType === 'admin' ?
                     <div className="user-actions">
                         <button className="user-action-button delete" onClick={deleteProduct}>Delete</button>
                         <button className="user-action-button update" onClick={updateProduct}>Update</button>
                     </div>
-                }
+                    : null}
             </div>
 
             <Modal className="product-modal-mobile" show={showProductModal} onHide={handleClose} size="lg" centered>
