@@ -32,7 +32,6 @@ const LoginModal = ({ show, close, swapModal, setUser }) => {
 
     const loginUser = async (loginDetails) => {
         try {
-            debugger;
             const response = await axios.post(url + '/api/users/login', loginDetails);
             localStorage.setItem('token', JSON.stringify(await response.data.token));
             setUser(response.data.user[0]);
